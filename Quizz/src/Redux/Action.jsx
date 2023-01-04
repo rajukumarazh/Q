@@ -5,4 +5,11 @@ export const chooseAnswer = (data) => {
 		payload: data,
 	};
 };
-export default { chooseAnswer };
+export const chooseSubject = (data) => {
+	console.log('selectedSubject', data);
+	return {
+		type: 'CHANGE_SUBJECT',
+		payload: data,
+	};
+};
+export default { chooseAnswer, chooseSubject };

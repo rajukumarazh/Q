@@ -4,7 +4,7 @@ import Question from './Question';
 function App() {
 	return (
 		<div>
-			<h1 className="text-red-600 text-center text-lg font-semibold">
+			<h1 className="text-red-600 text-center text-xl font-semibold">
 				{' '}
 				Quizzato
 			</h1>
