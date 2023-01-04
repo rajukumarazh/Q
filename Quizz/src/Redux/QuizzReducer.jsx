@@ -7,13 +7,15 @@ const initialState = {
 export const QuizzReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case 'CHOOSE_ANSWER':
-			return state?.answer?.map((curr) => {
+			let dt = state?.answer?.map((curr) => {
 				if (curr.id == payload.id) {
 					return { ...curr, choosenAns: payload.choosenAnsw };
 				} else {
-					return { ...curr };
+					return { ...state };
 				}
 			});
+
+			return dt;
 
 		case 'ALL_QUESTION':
 			return state;
