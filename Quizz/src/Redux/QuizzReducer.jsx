@@ -2,6 +2,7 @@ import q from '../q.json';
 const initialState = {
 	QNA: [...q[0].geography],
 	Question: q[0],
+	selectedSubject:["history"]
 };
 
 export const QuizzReducer = (state = initialState, { type, payload }) => {
@@ -10,12 +11,14 @@ export const QuizzReducer = (state = initialState, { type, payload }) => {
 			return { ...state, questions: payload };
 
 		case 'CHANGE_SUBJECT':
-			let dt = Object.keys(state.Question).filter((curr) => {
-				if (curr == payload) {
-					state.Question[curr];
-				}
-			});
-			return { ...state, dt };
+			let selectedUsers=["history",...payload]
+			const filteredUsers = Object.keys(state.Question)
+    .filter(key => selectedUsers.includes(key))
+    .reduce((obj, key) => {
+        obj[key] = state.Question[key];
+        return obj;
+  }, {});
+			return { ...state, Question: filteredUsers,selectedSubject:payload};
 
 		default:
 			return state;
