@@ -12,4 +12,18 @@ export const chooseSubject = (data) => {
 		payload: data,
 	};
 };
-export default { chooseAnswer, chooseSubject };
+export const HandleMarks = (data) => {
+	console.log('MarksAction', data);
+	return {
+		type: 'HANDLE_MARKS',
+		payload: data,
+	};
+};
+export const submitted = (data) => {
+	console.log('submit_binary', data);
+	return {
+		type: 'SUBMIT',
+		payload: data,
+	};
+};
+export default { chooseAnswer, chooseSubject, submitted };
