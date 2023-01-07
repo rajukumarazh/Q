@@ -3,17 +3,21 @@ import q from './q.json';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { chooseAnswer, chooseSubject } from './Redux/Action';
-
+import {
+	chooseAnswer,
+	chooseSubject,
+	HandleMarks,
+	submitted,
+} from './Redux/Action';
+import { Navigate } from 'react-router-dom';
 function Question() {
 	const [subject, setSubject] = useState();
 	const [quest, setQuest] = useState(q[0].geography);
-
+	const [sub, setSub] = useState(false);
 	const [totalpage] = useState(quest.length);
 	const [perPage, setperPage] = useState(1);
 	const totalNumberOfPage = totalpage / perPage;
 	const [currentPage, setCurrentPage] = useState(1);
-
 	let dt = Object.keys(q[0]);
 	const allState = useSelector((state) => state);
 	console.log('hello', allState);
@@ -26,10 +30,10 @@ function Question() {
 	for (let i = 1; i <= totalNumberOfPage; i++) {
 		count.push(i);
 	}
-	const dispatch = useDispatch(chooseAnswer, chooseSubject);
+	const dispatch = useDispatch(chooseAnswer);
 
 	const chooseAnswerFun = (ans, id) => {
-		const filterQuestionList = allState.questions?.map((e) => {
+		const filterQuestionList = allState.QNA?.map((e) => {
 			if (e.id === id) {
 				return { ...e, choosen: ans };
 			} else {
@@ -38,8 +42,27 @@ function Question() {
 		});
 		dispatch(chooseAnswer(filterQuestionList));
 	};
+	if (sub == true) {
+		return <Navigate to="/submitted" />;
+	}
+	const handleNavigate = () => {
+		let totalMarks = allState.QNA?.filter((curr) => {
+			return curr.correctAnswer == curr.choosen;
+		});
+		console.log('marks', totalMarks.length);
+		setSub(!sub);
+		dispatch(HandleMarks(totalMarks), submitted(1));
+		dispatch(submitted(true));
+	};
 	return (
-		<div className="p-5">
+		<div className="p-5 relative">
+			{currentPage == allState.QNA.length ? (
+				<p className="text-red-600 text-center font-semibold underline">
+					Last Question{' '}
+				</p>
+			) : (
+				''
+			)}
 			<div className="flex justify-between">
 				{pages !== undefined ? (
 					pages?.map((curr, i, arr) => {
@@ -111,6 +134,7 @@ function Question() {
 					Next
 				</button>
 			</div>
+
 			{count
 				? count.map((curr) => {
 						return (
@@ -126,6 +150,16 @@ function Question() {
 						);
 				  })
 				: ''}
+			{allState?.QNA[allState?.QNA.length - 1].choosen !== undefined &&
+				allState?.QNA?.filter((curr) => curr.choosen == undefined).length ==
+					0 && (
+					<button
+						onClick={() => handleNavigate()}
+						className="text-white font-semibold px-2 py-3 bg-red-600 absolute right-6 rounded-md mt-5"
+					>
+						Submit{' '}
+					</button>
+				)}
 		</div>
 	);
 }
