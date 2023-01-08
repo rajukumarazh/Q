@@ -3,7 +3,7 @@ import React from 'react';
 function Instruction() {
 	return (
 		<div className="">
-			<div className="flex justify-between">
+			<div className="flex justify-between ">
 				<div className="ml-2">
 					<h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
 						Here is some reason's for why we want online payment
@@ -135,8 +135,8 @@ function Instruction() {
 						</li>
 					</ul>
 				</div>
-				<div>
-					<img src="./Quizz.png" className="rounded-md h-80" />
+				<div className='w-1/2'>
+					<img src="./Quizz.png" className="rounded-md h-80 w-full" />
 				</div>
 			</div>
 		</div>

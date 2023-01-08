@@ -105,13 +105,13 @@ function Question() {
 				) : (
 					<p>Question Not found</p>
 				)}
-				<div className="p-5">
+				{/* <div className="p-5">
 					<select onChange={(e) => dispatch(chooseSubject(e.target.value))}>
 						{dt?.map((curr) => {
 							return <option value={curr}>{curr}</option>;
 						})}
 					</select>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex justify-between">
 				<button

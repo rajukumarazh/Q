@@ -8,10 +8,9 @@ function Home() {
 	const [begin, setBegin] = useState(false);
 	return (
 		<div className="bg-gray-200 rounded-md shadow-md p-2">
-			<h1 className="text-red-600 text-center text-xl font-semibold">
+			<h1 className="text-red-600 text-center text-xl font-semibold mb-5">
 				Quizzato
 			</h1>
-
 			{begin == false && <Instruction />}
 			{begin == false && (
 				<button
@@ -22,7 +21,8 @@ function Home() {
 				</button>
 			)}
 
-			{begin == true && allState.isSubmitted == false && <Question />}
+			{/* {begin == true && allState.isSubmitted == false && <Question />} */}
+						{begin == true&&<Question />}
 		</div>
 	);
 }
