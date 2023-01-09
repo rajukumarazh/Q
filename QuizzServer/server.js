@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const user = require('./user');
+const dotenv = require('dotenv');
+// dotenv.config({ path: __dirname + '/.env' });
 const app = express();
+console.log('url', process.env);
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@crud.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority';
 const options = {
