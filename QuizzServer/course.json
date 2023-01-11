@@ -1,0 +1,58 @@
+{
+	"courses": [
+		{
+			"course_name": "React.js",
+			"course_price": "2500",
+			"category": "Web-Development",
+			"duration": "12 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		},
+		{
+			"course_name": "javascript.js",
+			"course_price": "2500",
+			"category": "Web-Development",
+			"duration": "6 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		},
+		{
+			"course_name": "Next.js",
+			"course_price": "2000",
+			"category": "Web-Development",
+			"duration": "12 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		},
+		{
+			"course_name": "Angular.js",
+			"course_price": "3000",
+			"category": "Web-Development",
+			"duration": "12 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		},
+		{
+			"course_name": "three.js",
+			"course_price": "2000",
+			"category": "Web-Development",
+			"duration": "12 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		},
+		{
+			"course_name": "wordpress",
+			"course_price": "2500",
+			"category": "Web-Development",
+			"duration": "10 week",
+			"duration_daily": "2 hour",
+			"isLive": "true",
+			"isDownloadable": "false"
+		}
+	]
+}
