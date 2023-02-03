@@ -56,8 +56,14 @@ function Navigation() {
 						</nav>
 					</div>
 					<div className=" ">
-						<input type="text" />
-						<button>Search</button>
+						<input
+							type="text"
+							className=" rounded-md border-1 h-8 border-solid placeholder:text-center text-center"
+							placeholder="search courses"
+						/>
+						<button className="bg-blue-500 rounded-sm px-2 py-1 ml-4 text-white font-semibold">
+							Search
+						</button>
 					</div>
 					<div
 						className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4"
