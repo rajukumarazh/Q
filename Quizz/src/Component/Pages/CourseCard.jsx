@@ -1,26 +1,35 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 function CourseCard() {
-	const [coures, setCourse] = useState();
-	async function fetchCourse() {
-		let response = await axios.get('http://localhost:8000/all');
-		console.log('responseive', response.data);
-		setCourse(response.data);
-		// dispatch(setProducts(response.data));
+	const allState = useSelector((state) => state);
+	console.log('allStatse', allState);
+	const [address, setAddress] = useState('');
+	// const [coures, setCourse] = useState();
+	// async function fetchCourse() {
+	// 	let response = await axios.get('http://localhost:8000/all');
+	// 	console.log('responseive', response.data);
+	// 	setCourse(response.data);
+
+	// }
+	// useEffect(() => {
+	// 	fetchCourse();
+	// }, []);
+	// console.log('response', coures);
+	function getNavigate(dt) {
+		console.log('helloe', dt);
+		<Navigate to={`${dt}`} />;
 	}
-	useEffect(() => {
-		fetchCourse();
-	}, []);
-	console.log('response', coures);
 	return (
-		// <div className='grid grid-cols-4'></div>
 		<div className=" grid grid-cols-4 gap-4 p-2">
-			{coures?.map((curr, i, arr) => {
+			{allState?.levelUp?.apiData.map((curr, i, arr) => {
 				return (
 					<div className="">
 						<div className="rounded-lg shadow-lg bg-white max-w-sm">
-							<a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
+							{/* <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light"> */}
+							<Link to={`${address}`}>
 								<img
 									className="rounded-t-lg "
 									src={
@@ -30,7 +39,8 @@ function CourseCard() {
 									}
 									alt="not_found"
 								/>
-							</a>
+							</Link>
+
 							<div className="p-6">
 								<h5 className="text-gray-900 text-xl font-medium mb-2">
 									{curr.name}
@@ -48,6 +58,8 @@ function CourseCard() {
 								)}
 								<button
 									type="button"
+									value="js"
+									onClick={(e) => setAddress(e.target.value)}
 									className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 								>
 									Button

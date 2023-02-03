@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
     "axios": "^1.2.2",
     "bcryptjs": "^2.4.3",
     "passport": "^0.6.0",
@@ -19,6 +20,7 @@
     "react-router-dom": "^6.6.1",
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",
+    "redux-saga": "^1.2.2",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Instruction from './Instruction';
 function Home() {
 	const allState = useSelector((state) => state);
+	console.log('allStatse', allState);
 	const [begin, setBegin] = useState(false);
 	return (
 		<div className="bg-gray-200 rounded-md shadow-md p-2">
@@ -22,7 +23,7 @@ function Home() {
 			)}
 
 			{/* {begin == true && allState.isSubmitted == false && <Question />} */}
-						{begin == true&&<Question />}
+			{begin == true && <Question />}
 		</div>
 	);
 }

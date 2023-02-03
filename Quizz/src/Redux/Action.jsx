@@ -26,4 +26,11 @@ export const submitted = (data) => {
 		payload: data,
 	};
 };
-export default { chooseAnswer, chooseSubject, submitted };
+export const setApidata = (data) => {
+	console.log('dataRecieve', data);
+	return {
+		type: 'API_CALL',
+		payload: data,
+	};
+};
+export default { chooseAnswer, chooseSubject, submitted, setApidata };
