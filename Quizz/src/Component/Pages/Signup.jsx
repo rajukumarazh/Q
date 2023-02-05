@@ -1,6 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {useState} from "react";
+import axios from "axios"
+import { Navigate } from 'react-router-dom';
 function Signup() {
+	const [signUpDetails,SetSignUpDetails]=useState({
+email:"",password:""
+	})
+const [Registered,setRegistered]=useState(false)
+	console.log("data",signUpDetails);
+	let handleSubmit = async (e) => {
+		e.preventDefault();
+		// dispatch(createUser(signUp));
+		let ar = await axios
+			.post('http://localhost:8000/signup', signUpDetails)
+			.then((res) => res);
+		console.log('postedData', ar);
+		setRegistered(true)
+	
+	};
 	return (
 		<div className="flex justify-between ">
 			<div className="h-screen bg-gradient-to-br from-blue-200 to-indigo-600 flex justify-center items-center w-full">
@@ -11,13 +29,13 @@ function Signup() {
 						alt="Sample image"
 					/>
 				</div>
-				<form>
+				{/* <form> */}
 					<div className="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-sm">
 						<div className="space-y-4">
 							<h1 className="text-center text-2xl font-semibold text-gray-600">
 								all starting from here
 							</h1>
-							<div>
+							{/* <div>
 								<label
 									for="email"
 									className="block mb-1 text-gray-600 font-semibold"
@@ -28,7 +46,7 @@ function Signup() {
 									type="text"
 									className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full border-4"
 								/>
-							</div>
+							</div> */}
 							<div>
 								<label
 									for="email"
@@ -38,6 +56,7 @@ function Signup() {
 								</label>
 								<input
 									type="text"
+									onChange={(e)=>SetSignUpDetails({...signUpDetails,email:e.target.value})}
 									className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full border-4"
 								/>
 							</div>
@@ -50,15 +69,18 @@ function Signup() {
 								</label>
 								<input
 									type="text"
+									onChange={(e)=>SetSignUpDetails({...signUpDetails,password:e.target.value})}
 									className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full border-4"
 								/>
 							</div>
 						</div>
-						<button className="mt-4 w-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-indigo-100 py-2 rounded-md text-lg tracking-wide">
+						<button  onClick={(e)=>handleSubmit(e)}
+						className="mt-4 w-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-indigo-100 py-2 rounded-md text-lg tracking-wide">
 							Register
 						</button>
+						{Registered==true&&<p className='text-red-400'>You are successfully Registered <Link to="/login" className='underline text-blue'>click to login</Link></p>}
 					</div>
-				</form>
+				{/* </form> */}
 			</div>
 		</div>
 	);

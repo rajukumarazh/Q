@@ -7,7 +7,7 @@ const dataSchema = new mongoose.Schema({
 	},
 	password: {
 		required: true,
-		type: Number,
+		type: String,
 	},
 	// confirm_password: {
 	// 	required: true,

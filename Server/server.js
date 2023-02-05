@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const accessTokenSecret = 'youraccesstokensecret';
 app.use(bodyParser.json());
 // const course = require('./course.json');
 // After you declare "app"
@@ -67,10 +68,41 @@ app.get('/user', async (req, res) => {
 });
 app.get('/all', async (req, res) => {
 	const data = await course.find();
-	console.log('data', data);
+	// console.log('data', data);
 	res.send(data);
 });
-// const app=expres();
-//passport check
+/// signup student
 
+app.post('/signup', async (req, res) => {
+	console.log('res', req.body);
+	const data = new student({
+		email: req.body.email,
+		password: req.body.password,
+		confirm_password: req.body.confirm_password,
+	});
+	const dataToSave = data.save();
+	res.status(200).json(dataToSave);
+})
+app.post('/login',  (req, res) => {
+	console.log('user', req.body);
+	const { email, password } = req.body;
+
+	// const data = await student.find();
+	// const user = data.filter((u) => {
+	// 	if (u.email == email && u.password == password) {
+	// 		return u;
+	// 	}
+	// });
+	
+
+	// const accessToken = jwt.sign(
+	// 	{ username: user[0]?.email, paasword: user[0]?.password },
+	// 	accessTokenSecret
+	// );
+	// user.length > 0 && res.json({ token: accessToken, user: user });
+
+
+
+	// console.log('token', accessToken);
+});
 app.listen(8000, () => console.log('server running at 8000'));
