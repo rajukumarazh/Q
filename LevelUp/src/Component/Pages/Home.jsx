@@ -1,12 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Crousel from "./Crousel";
-import WebFooter from "./WebFooter";
-import CourseCard from "./CourseCard";
-import { useState } from "react";
-import { sortCourse } from "../../Redux/Toolkit/CourseSlice";
-import { useDispatch } from "react-redux";
-import Review from "./Review";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Crousel from './Crousel';
+import WebFooter from './WebFooter';
+import CourseCard from './CourseCard';
+import { useState } from 'react';
+import { sortCourse } from '../../Redux/Toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
+import Review from './Review';
+import WithAuth from '../WithAuth/WithAuth';
 function Home() {
 	const [showcourse, setShowCourse] = useState(false);
 	const dispatch = useDispatch();
@@ -16,9 +17,7 @@ function Home() {
 				<div className="text-center bg-gray-50 text-gray-800 py-24 px-6">
 					<h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
 						Level up your experience <br />
-						<span className="text-blue-600">
-							for Industry
-						</span>
+						<span className="text-blue-600">for Industry</span>
 					</h1>
 					<a
 						className="inline-block px-7 py-3 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -82,15 +81,7 @@ function Home() {
 									class="py-2 text-sm text-gray-700 dark:text-gray-200"
 									aria-labelledby="dropdownHoverButton"
 								>
-									<li
-										onClick={() =>
-											dispatch(
-												sortCourse(
-													"Web-Development",
-												),
-											)
-										}
-									>
+									<li onClick={() => dispatch(sortCourse('Web-Development'))}>
 										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 											Web Development
 										</p>
@@ -101,13 +92,7 @@ function Home() {
 										// 		!showcourse,
 										// 	)
 										// }
-										onClick={() =>
-											dispatch(
-												sortCourse(
-													"backend",
-												),
-											)
-										}
+										onClick={() => dispatch(sortCourse('backend'))}
 									>
 										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 											Back_End Development
@@ -119,24 +104,14 @@ function Home() {
 										// 		!showcourse,
 										// 	)
 										// }
-										onClick={() =>
-											dispatch(
-												sortCourse("cloud"),
-											)
-										}
+										onClick={() => dispatch(sortCourse('cloud'))}
 									>
 										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 											Cloud Programming
 										</p>
 									</li>
 									<li
-										onClick={() =>
-											dispatch(
-												sortCourse(
-													"database",
-												),
-											)
-										}
+										onClick={() => dispatch(sortCourse('database'))}
 										// onClick={() =>
 										// 	setShowCourse(
 										// 		!showcourse,
@@ -153,11 +128,7 @@ function Home() {
 										// 		!showcourse,
 										// 	)
 										// }
-										onClick={() =>
-											dispatch(
-												sortCourse("all"),
-											)
-										}
+										onClick={() => dispatch(sortCourse('all'))}
 									>
 										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 											all courses
@@ -170,8 +141,8 @@ function Home() {
 				</div>
 				<CourseCard />
 				{/* <Review name={"raju kumar"} />
-				<Review name={"peter"} />
-				<Review name={"hawkins"} /> */}
+				<Review name={"peter"} /> */}
+				{/* <Review name={'hawkins'} /> */}
 			</section>
 		</div>
 	);

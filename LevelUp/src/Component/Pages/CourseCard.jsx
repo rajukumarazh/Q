@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 function CourseCard() {
 	const allState = useSelector((state) => state);
-	console.log("allStatse", allState);
-	const [address, setAddress] = useState("");
+	console.log('allStatse', allState);
+	const [address, setAddress] = useState('');
 	// const [coures, setCourse] = useState();
 	// async function fetchCourse() {
 	// 	let response = await axios.get('http://localhost:8000/all');
@@ -19,7 +19,7 @@ function CourseCard() {
 	// }, []);
 	// console.log('response', coures);
 	function getNavigate(dt) {
-		console.log("helloe", dt);
+		console.log('helloe', dt);
 		<Navigate to={`${dt}`} />;
 	}
 	return (
@@ -34,7 +34,7 @@ function CourseCard() {
 									className="rounded-t-lg h-52 w-full"
 									src={
 										curr.img == undefined
-											? "https://mdbootstrap.com/img/new/standard/nature/182.jpg"
+											? 'https://mdbootstrap.com/img/new/standard/nature/182.jpg'
 											: curr.img
 									}
 									alt="not_found"
@@ -47,14 +47,12 @@ function CourseCard() {
 								</h5>
 								{curr.description == undefined ? (
 									<p className="text-gray-700 text-base mb-4">
-										Some quick example text to
-										build on the card title and
-										make up the bulk of the card's
-										content.
+										Some quick example text to build on the card title and make
+										up the bulk of the card's content.
 									</p>
 								) : (
 									<p className="text-gray-700 text-base mb-4">
-										{" "}
+										{' '}
 										{curr.description}
 									</p>
 								)}
@@ -62,9 +60,7 @@ function CourseCard() {
 								<button
 									type="button"
 									value="js"
-									onClick={(e) =>
-										setAddress(e.target.value)
-									}
+									onClick={(e) => setAddress(e.target.value)}
 									className=" inline-block w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 								>
 									Explore

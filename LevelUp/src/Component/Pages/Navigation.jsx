@@ -1,11 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { searchedCourse } from "../../Redux/Toolkit/CourseSlice";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { searchedCourse } from '../../Redux/Toolkit/CourseSlice';
 function Navigation() {
 	const dispatch = useDispatch();
-	const [search, setSearch] = useState("");
+	const [search, setSearch] = useState('');
+	function logOut() {
+		localStorage.removeItem('token');
+	}
 	return (
 		<div className="relative">
 			<nav
@@ -13,10 +16,7 @@ function Navigation() {
 				className="w-full z-30  fixed py-1 bg-white shadow-lg border-b border-blue-400"
 			>
 				<div className="w-full flex items-center justify-between mt-0 px-6 py-2">
-					<label
-						for="menu-toggle"
-						className="cursor-pointer md:hidden block"
-					>
+					<label for="menu-toggle" className="cursor-pointer md:hidden block">
 						<svg
 							className="fill-current text-blue-600"
 							xmlns="http://www.w3.org/2000/svg"
@@ -28,11 +28,7 @@ function Navigation() {
 							<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
 						</svg>
 					</label>
-					<input
-						className="hidden"
-						type="checkbox"
-						id="menu-toggle"
-					/>
+					<input className="hidden" type="checkbox" id="menu-toggle" />
 
 					<div
 						className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1"
@@ -75,9 +71,7 @@ function Navigation() {
 							placeholder="search courses"
 						/>
 						<button
-							onClick={() =>
-								dispatch(searchedCourse(search))
-							}
+							onClick={() => dispatch(searchedCourse(search))}
 							className="bg-blue-500 rounded-sm px-2 py-1 ml-4 text-white font-semibold"
 						>
 							Search
@@ -89,10 +83,14 @@ function Navigation() {
 					>
 						<div className="auth flex  items-center w-full md:w-full">
 							<Link
+								onClick={() => logOut()}
 								to="/login"
 								className="bg-transparent text-gray-800  p-2 rounded border border-gray-300 mr-4 hover:bg-gray-100 hover:text-gray-700"
 							>
-								Sign in
+								{/* {localStorage.getItem('token') !== undefined
+									? 'Logout'
+									: 'login'} */}
+								LogIn
 							</Link>
 							<Link
 								to="/signup"
