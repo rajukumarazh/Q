@@ -5,3 +5,6 @@ content-type: application/json
     "email": "sample",
     "password": "123"
 }
+
+GET http://localhost:8000/js HTTP/1.1
+

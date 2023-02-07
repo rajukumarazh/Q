@@ -9,12 +9,15 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
+const js = require('./mongo/javascript');
 app.use(bodyParser.json());
 // const course = require('./course.json');
 // After you declare "app"
 const course = require('./mongo/course');
 app.use(session({ secret: 'melody hensley is my spirit animal' }));
 var cors = require('cors');
+const javascript = require('./mongo/javascript');
+const python = require('./mongo/python');
 app.use(cors());
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@cluster0.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority';
@@ -72,6 +75,14 @@ app.get('/all', async (req, res) => {
 	// console.log('data', data);
 	res.send(data);
 });
+app.get('/js', async (req, res) => {
+	const data = await javascript.find();
+	res.send(data);
+});
+app.get('/python', async (req, res) => {
+	const data = await python.find();
+	res.send(data);
+});
 /// signup student
 
 app.post('/signup', async (req, res) => {
@@ -84,18 +95,7 @@ app.post('/signup', async (req, res) => {
 	const dataToSave = data.save();
 	res.status(200).json(dataToSave);
 });
-// app.post('/login', async (req, res) => {
-// 	console.log('user', req.body);
-// 	const { email, password } = req.body;
 
-// 	// const data = await student.find();
-// 	// const user = data.filter((u) => {
-// 	// 	if (u.email == email && u.password == password) {
-// 	// 		return u;
-// 	// 	}
-// 	// });
-
-// });
 app.post('/log', async (req, res) => {
 	console.log('res', req.body);
 	const data = await student.find();

@@ -6,9 +6,9 @@ import { searchedCourse } from '../../Redux/Toolkit/CourseSlice';
 function Navigation() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState('');
-	function logOut() {
-		localStorage.removeItem('token');
-	}
+	// function logOut() {
+	// 	localStorage.removeItem('token');
+	// }
 	return (
 		<div className="relative">
 			<nav

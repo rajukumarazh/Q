@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import WithAuth from '../WithAuth/WithAuth';
+import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function Login() {
+	let navigate = useNavigate();
 	const [loginDetails, setLoginDetails] = useState({
 		email: '',
 		password: '',
@@ -16,11 +19,16 @@ function Login() {
 			.post('http://localhost:8000/log', loginDetails)
 			.then((res) => res);
 		console.log('postedData', ar);
-		// localStorage.setItem('token', ar?.data.token);
-		localStorage.setItem('token', ar?.data?.token);
+		if (ar?.data?.token) {
+			navigate('/');
+		}
 		// setRegistered(true)
+		localStorage.setItem('token', ar?.data.token);
 	};
 
+	// (function () {
+	// 	localStorage.setItem('token', 'rajukumar');
+	// })();
 	return (
 		<section className="h-screen">
 			<div className="px-6 h-full text-gray-800">
@@ -33,6 +41,9 @@ function Login() {
 						/>
 					</div>
 					<div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+						<h1 className="text-red-600 text-center font-semibold text-lg mb-5">
+							Welcome to LevelUp{' '}
+						</h1>
 						<div className="flex flex-row items-center justify-center lg:justify-start">
 							<p className="text-lg mb-0 mr-4">Sign in with</p>
 							<button
@@ -146,6 +157,7 @@ function Login() {
 							>
 								Login
 							</button>
+
 							<p className="text-sm font-semibold mt-2 pt-1 mb-0">
 								Don't have an account?
 								<a

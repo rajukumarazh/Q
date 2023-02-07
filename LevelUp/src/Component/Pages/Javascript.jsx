@@ -1,6 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import WithAuth from '../WithAuth/WithAuth';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 function Javascript() {
+	const location = useLocation();
+	let subject = location.pathname.replace(/[^\w\s]/gi, '');
+	console.log('location', subject);
+	if (subject) {
+		(async function getSubject() {
+			let sub = await axios
+				.get(`http://localhost:8000/${subject}`)
+				.then((res) => res.data);
+
+			console.log('daa', sub);
+		})();
+	}
+
 	return (
 		<div>
 			{/* <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
@@ -77,6 +93,9 @@ function Javascript() {
 										{/* <button className="bg-blue-600 text-white font-semibold px-2 py-2 rounded-md">
 											sxxxuyz
 										</button> */}
+										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+											Enroll Here
+										</button>
 									</Link>
 								</div>
 							</div>
@@ -93,6 +112,9 @@ function Javascript() {
 											Keep you user engaged by providing meaningful information.
 											Remember that by this time, the user is curious.
 										</p>
+										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+											Enroll Here
+										</button>
 									</div>
 								</div>
 							</div>
@@ -109,6 +131,9 @@ function Javascript() {
 											Write a few lines about each one. A paragraph describing a
 											feature will be enough. Keep you user engaged!
 										</p>
+										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+											Enroll Here
+										</button>
 									</div>
 								</div>
 							</div>
@@ -140,4 +165,4 @@ function Javascript() {
 	);
 }
 
-export default Javascript;
+export default WithAuth(Javascript);
