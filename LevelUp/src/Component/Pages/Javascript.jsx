@@ -3,20 +3,106 @@ import { Link } from 'react-router-dom';
 import WithAuth from '../WithAuth/WithAuth';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { selectCourse } from '../../Redux/Toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+function loadScript(src) {
+	return new Promise((resolve) => {
+		const script = document.createElement('script');
+		script.src = src;
+		script.onload = () => {
+			resolve(true);
+		};
+		script.onerror = () => {
+			resolve(false);
+		};
+		document.body.appendChild(script);
+	});
+}
 function Javascript() {
+	let amount = '2500';
 	const location = useLocation();
 	let subject = location.pathname.replace(/[^\w\s]/gi, '');
+	const [course, setCoures] = useState();
+	const [current, setCurrent] = useState();
 	console.log('location', subject);
-	if (subject) {
-		(async function getSubject() {
-			let sub = await axios
-				.get(`http://localhost:8000/${subject}`)
-				.then((res) => res.data);
-
-			console.log('daa', sub);
-		})();
+	console.log('currentPrice', current);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (subject) {
+			async function getSubject() {
+				let sub = await axios
+					.get(`http://localhost:8000/${subject}`)
+					.then((res) => res.data);
+				// console.log('daa');
+				dispatch(selectCourse(sub));
+				setCoures(() => sub);
+			}
+			getSubject();
+		}
+	}, []);
+	const allState = useSelector((state) => state.levelUp.selectedCourse);
+	console.log('allState', allState);
+	function priceAndPay(value) {
+		setCurrent(value.course_price);
+		showRazorpay();
 	}
+	async function showRazorpay(price) {
+		const res = await loadScript(
+			'https://checkout.razorpay.com/v1/checkout.js'
+		);
 
+		if (!res) {
+			alert('Razorpay SDK failed to load. Are you online?');
+			return;
+		}
+		// buyedItem({ user_id: profileState, data: cart.cart });
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				data: current,
+			}),
+		};
+		const data = await fetch(
+			'http://localhost:8000/razorpay',
+			requestOptions
+		).then((response) => {
+			return response.json();
+		});
+
+		console.log('data', data);
+		const options = {
+			key: 'rzp_test_LUoWzQJZYjdLNB',
+			currency: data.currency,
+			// amount: data.data?.amount?.toString(),
+			amount: current,
+			order_id: data.id,
+			name: 'LevelUp.com',
+			description: 'Hello Folk!! Avoid  to be Click Refresh button/icon',
+			// image: 'http://localhost:1337/logo.svg',
+			handler: async function (response) {
+				// console.log('dkfkdfkdfdfd', response);
+				const result = await axios.post(
+					'http://localhost:8000/verification',
+					response
+				);
+				console.log('rsponse', result.data);
+				// if (result.data) {
+				// 	dispatch(payment_Success(result.data.success));
+				// }
+			},
+			prefill: {
+				name: 'raju Kumar',
+				email: 'raju.kumar@palinfocom.com',
+				phone_number: '9899999999',
+			},
+		};
+		const paymentObject = new window.Razorpay(options);
+		paymentObject.open();
+	}
 	return (
 		<div>
 			{/* <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
@@ -79,27 +165,42 @@ function Javascript() {
 				<section className="pb-10 bg-blueGray-200 -mt-24">
 					<div className="container mx-auto px-4">
 						<div className="flex flex-wrap">
-							<div className="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
-								<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-									<Link to={'/c_details'} className="px-4 py-5 flex-auto">
-										<div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
-											<i className="fas fa-award"></i>
-										</div>
-										<h6 className="text-xl font-semibold">Core Javascript</h6>
-										<p className="mt-2 mb-4 text-blueGray-500">
-											Divide details about your product or agency work into
-											parts. A paragraph describing a feature will be enough.
-										</p>
-										{/* <button className="bg-blue-600 text-white font-semibold px-2 py-2 rounded-md">
+							{allState?.map((curr) => {
+								return (
+									<div className="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
+										<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
+											<div className="px-4 py-5 flex-auto">
+												<div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
+													<i className="fas fa-award"></i>
+												</div>
+												<h6 className="text-xl font-semibold">
+													{curr.course_name}
+												</h6>
+												<p className="mt-2 mb-4 text-blueGray-500">
+													Divide details about your product or agency work into
+													parts. A paragraph describing a feature will be
+													enough.
+												</p>
+												{/* <button className="bg-blue-600 text-white font-semibold px-2 py-2 rounded-md">
 											sxxxuyz
 										</button> */}
-										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
-											Enroll Here
-										</button>
-									</Link>
-								</div>
-							</div>
-							<div className="w-full md:w-4/12 px-4 text-center">
+												<div className="flex justify-center gap-5">
+													<button
+														onClick={() => priceAndPay(curr)}
+														className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg"
+													>
+														Enroll Here
+													</button>
+													<div className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+														Rs- {curr.course_price}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								);
+							})}
+							{/* <div className="w-full md:w-4/12 px-4 text-center">
 								<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
 									<div className="px-4 py-5 flex-auto">
 										<div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400">
@@ -112,9 +213,12 @@ function Javascript() {
 											Keep you user engaged by providing meaningful information.
 											Remember that by this time, the user is curious.
 										</p>
-										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
-											Enroll Here
-										</button>
+										<div className="flex justify-center gap-5">
+											<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+												Enroll Here
+											</button>
+											<div className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -131,13 +235,19 @@ function Javascript() {
 											Write a few lines about each one. A paragraph describing a
 											feature will be enough. Keep you user engaged!
 										</p>
-										<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
-											Enroll Here
-										</button>
+										<div className="flex justify-center gap-5">
+											<button className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+												Enroll Here
+											</button>
+											<div className="bg-red-400 text-white font-semibold px-2 py-2 rounded-lg">
+												fdf
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
+						{/* product end */}
 						<footer className="relative  pt-8 pb-6 mt-1">
 							<div className="container mx-auto px-4">
 								<div className="flex flex-wrap items-center md:justify-between justify-center">

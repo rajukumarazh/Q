@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const student = require('./student');
 const dotenv = require('dotenv');
 const app = express();
+const crypto = require('crypto');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -10,6 +11,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
 const js = require('./mongo/javascript');
+const Razorpay = require('razorpay');
 app.use(bodyParser.json());
 // const course = require('./course.json');
 // After you declare "app"
@@ -113,5 +115,74 @@ app.post('/log', async (req, res) => {
 	console.log('token', accessToken);
 	console.log('logo', user);
 });
+// payment apis
 
+var razorpay = new Razorpay({
+	key_id: 'rzp_test_LUoWzQJZYjdLNB',
+	key_secret: 'gAz9uhd7QvbNqLYP6DT3rHHn',
+});
+app.get('/logo.svg', (req, res) => {
+	res.sendFile(path.join(__dirname, 'logo.svg'));
+});
+
+app.post('/verification', async (req, res) => {
+	console.log('req', req.body);
+	try {
+		const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+			req.body;
+
+		// Pass yours key_secret here
+		const key_secret = 'gAz9uhd7QvbNqLYP6DT3rHHn';
+
+		// Creating hmac object
+		let hmac = crypto.createHmac('sha256', key_secret);
+
+		// Passing the data to be hashed
+		hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
+
+		// Creating the hmac in the required format
+		const generated_signature = hmac.digest('hex');
+		if (razorpay_signature === generated_signature) {
+			res.json({ success: true, message: 'Payment has been verified' });
+		} else {
+			console.log('sign failed', razorpay_order_id);
+			res.json({ success: false, message: 'Payment verification failed' });
+		}
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
+
+app.post('/razorpay', async (req, res) => {
+	console.log('body', req.body);
+	let { data } = req.body;
+	// var amount = data?.reduce(function (sum, number) {
+	// 	const updatedSum = sum + number.price;
+	// 	return updatedSum;
+	// }, 0);
+
+	// console.log('total amount', data);
+	const payment_capture = 1;
+	const amount = req.body.data;
+	const currency = 'INR';
+
+	const options = {
+		amount: amount * 100,
+		currency,
+		// receipt: shortid.generate(),
+		payment_capture,
+	};
+
+	try {
+		const response = await razorpay.orders.create(options);
+		console.log(response);
+		res.status(200).json({
+			id: response.id,
+			currency: response.currency,
+			amount: amount,
+		});
+	} catch (err) {
+		console.log(err);
+	}
+});
 app.listen(8000, () => console.log('server running at 8000'));
