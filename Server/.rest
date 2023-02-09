@@ -1,10 +1,6 @@
-POST http://localhost:8000/log HTTP/1.1
+POST http://localhost:8000/enroll_user HTTP/1.1
 content-type: application/json
 
-{
-    "email": "sample",
-    "password": "123"
-}
+{"id1":"sdfdifdfy","id2":"erek"}
 
-GET http://localhost:8000/js HTTP/1.1
 

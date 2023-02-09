@@ -9,6 +9,7 @@ const dataSchema = new mongoose.Schema({
 		required: true,
 		type: String,
 	},
+
 	// confirm_password: {
 	// 	required: true,
 	// 	type: Number,

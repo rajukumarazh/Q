@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 let initialState = {
 	apiData: [],
 	selectedCourse: [],
+	current_user: [],
 };
 export const CourseSlice = createSlice({
 	name: 'CourseSlice',
@@ -35,6 +36,9 @@ export const CourseSlice = createSlice({
 		selectCourse: (state, action) => {
 			state.selectedCourse = action.payload;
 		},
+		add_user: (state, action) => {
+			state.current_user = action.payload;
+		},
 	},
 });
 export const {
@@ -43,5 +47,6 @@ export const {
 	sortCourse,
 	searchedCourse,
 	selectCourse,
+	add_user,
 } = CourseSlice.actions;
 export default CourseSlice.reducer;

@@ -22,6 +22,12 @@ const courseSchema = new mongoose.Schema({
 	isDownloadable: {
 		type: Boolean,
 	},
+	enrolled_user: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'student',
+		},
+	],
 });
 
 module.exports = mongoose.model('javascript', courseSchema);

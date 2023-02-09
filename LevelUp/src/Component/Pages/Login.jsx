@@ -5,8 +5,11 @@ import axios from 'axios';
 import WithAuth from '../WithAuth/WithAuth';
 import { redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { add_user } from '../../Redux/Toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
 function Login() {
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [loginDetails, setLoginDetails] = useState({
 		email: '',
 		password: '',
@@ -23,6 +26,7 @@ function Login() {
 			navigate('/');
 		}
 		// setRegistered(true)
+		dispatch(add_user(ar.data.user));
 		localStorage.setItem('token', ar?.data.token);
 	};
 
