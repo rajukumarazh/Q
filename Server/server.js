@@ -2,7 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const student = require('./student');
 const dotenv = require('dotenv');
+// const User = require('./mongo/photo');
+const enrollment = require('./mongo/enrollment');
+const { User, Blog } = require('./mongo/photo');
 const app = express();
+// const enrollment = require('./mongo/enrollment');
 const crypto = require('crypto');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -20,6 +24,7 @@ app.use(session({ secret: 'melody hensley is my spirit animal' }));
 var cors = require('cors');
 const javascript = require('./mongo/javascript');
 const python = require('./mongo/python');
+
 app.use(cors());
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@cluster0.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority';
@@ -49,7 +54,6 @@ passport.use(
 	})
 );
 app.post('/login', passport.authenticate('local'), function (req, res) {
-	console.log('hello');
 	res.send(res);
 });
 passport.serializeUser((std, done) => {
@@ -113,7 +117,26 @@ app.post('/log', async (req, res) => {
 	user.length > 0 && res.json({ token: accessToken, user: user });
 
 	console.log('token', accessToken);
-	console.log('logo', user);
+
+	console.log('logIndetails', user);
+
+	async function getRelate() {
+		if (data.length > 0) {
+			const result = await enrollment.aggregate([
+				{
+					$lookup: {
+						from: 'javascripts',
+						localField: 'course_id',
+						foreignField: '_id',
+						as: 'enrolled_courses',
+					},
+				},
+			]);
+
+			console.log('send', result);
+		}
+	}
+	getRelate();
 });
 // payment apis
 
@@ -185,4 +208,39 @@ app.post('/razorpay', async (req, res) => {
 		console.log(err);
 	}
 });
+app.post('/enrolling_user', async (req, res) => {
+	let { user_id, course_id } = req.body;
+	// let dt = await student
+	// 	.findOne({ _id: req.body?.user_id })
+	// 	.populate('courses');
+	// res.send(dt);
+	// let dt = User.findOne({ _id: req.body?.user_id })
+	// 	.populate({ path: 'blogs', model: Blog })
+	// 	.exec(function (err, packages) {
+	// 		if (err) next(err);
+	// 		else res.status(200).json(packages);
+	// 	});
+	// console.log('dit', dt);
+	// (function () {
+	// 	const result = User.aggregate([
+	// 		{
+	// 			$lookup: {
+	// 				from: 'authors',
+	// 				localField: '_id',
+	// 				foreignField: req.body.user_id,
+	// 				as: 'enrolled_courses',
+	// 			},
+	// 		},
+	// 	]);
+	// 	console.log('result', result);
+	// })();
+	let enrlmt = new enrollment({
+		course_id: course_id,
+		user_id: user_id,
+	});
+	let saved = await enrlmt.save();
+
+	res.send({ saveData: saved });
+});
+
 app.listen(8000, () => console.log('server running at 8000'));

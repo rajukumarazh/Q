@@ -45,8 +45,20 @@ function Javascript() {
 	}, []);
 	const allState = useSelector((state) => state.levelUp.selectedCourse);
 	console.log('allState', allState);
+	const allState2 = useSelector((state) => state.levelUp);
+	console.log('allState2', allState2);
+	console.log('course', course);
 	function priceAndPay(value) {
-		setCurrent(value.course_price);
+		console.log('course_in_price', value);
+		// value.user = allState2?.current_user[0]?._id;
+		let dt = {
+			...value,
+			user_id: allState2?.current_user[0]?._id,
+			course_id: value._id,
+		};
+		console.log('current', current);
+		console.log('dddddddddd', dt);
+		setCurrent(dt);
 		showRazorpay();
 	}
 	async function showRazorpay(price) {
@@ -63,7 +75,7 @@ function Javascript() {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				data: current,
+				data: current.course_price,
 			}),
 		};
 		const data = await fetch(
@@ -90,9 +102,13 @@ function Javascript() {
 					response
 				);
 				console.log('rsponse', result.data);
-				// if (result.data) {
-				// 	dispatch(payment_Success(result.data.success));
-				// }
+				if (result.data) {
+					const result = await axios.post(
+						'http://localhost:8000/enrolling_user',
+						current
+					);
+					console.log('renrolled_data', result);
+				}
 			},
 			prefill: {
 				name: 'raju Kumar',

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const course = require('../Server/mongo/course');
+const javascript = require('../Server/mongo/javascript');
 const dataSchema = new mongoose.Schema({
 	email: {
 		required: true,
@@ -9,11 +10,6 @@ const dataSchema = new mongoose.Schema({
 		required: true,
 		type: String,
 	},
-
-	// confirm_password: {
-	// 	required: true,
-	// 	type: Number,
-	// },
 });
 
 module.exports = mongoose.model('student', dataSchema);

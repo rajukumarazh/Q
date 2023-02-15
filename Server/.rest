@@ -1,6 +1,19 @@
-POST http://localhost:8000/enroll_user HTTP/1.1
+POST http://localhost:8000/enrolling_user HTTP/1.1
 content-type: application/json
 
-{"id1":"sdfdifdfy","id2":"erek"}
+{
+    "user_id":"63df3676b3bbe5ad38510287",
+    "course_id":"63e1faa3e48532c7a8360999"
+
+}
+####
+POST http://localhost:8000/log HTTP/1.1
+content-type: application/json
+
+{
+    "email":"sample",
+    "password":"123"
+
+}
 
 
