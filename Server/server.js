@@ -126,8 +126,8 @@ app.post('/log', async (req, res) => {
 				{
 					$lookup: {
 						from: 'javascripts',
-						localField: 'course_id',
-						foreignField: '_id',
+						localField: '_id',
+						foreignField: 'course_id',
 						as: 'enrolled_courses',
 					},
 				},
@@ -241,6 +241,31 @@ app.post('/enrolling_user', async (req, res) => {
 	let saved = await enrlmt.save();
 
 	res.send({ saveData: saved });
+});
+app.post('/getrelate', async (req, res) => {
+	let { course_id, user_id } = req.body;
+	console.log('cosss', course_id, user_id);
+	async function getRelate() {
+		const result = await enrollment.aggregate([
+			{
+				$lookup: {
+					from: 'javascripts',
+					localField: 'course_id',
+					foreignField: '_id',
+					as: 'enrolled_courses',
+				},
+				// $lookup: {
+				// 	from: 'students',
+				// 	localField: '_id',
+				// 	foreignField: 'user_id',
+				// 	as: 'user_details',
+				// },
+			},
+		]);
+
+		res.send(result);
+	}
+	getRelate();
 });
 
 app.listen(8000, () => console.log('server running at 8000'));

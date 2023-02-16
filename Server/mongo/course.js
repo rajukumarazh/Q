@@ -22,13 +22,6 @@ const courseSchema = new mongoose.Schema({
 	isDownloadable: {
 		type: Boolean,
 	},
-	students: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'student',
-			required: true,
-		},
-	],
 });
 
 module.exports = mongoose.model('course', courseSchema);

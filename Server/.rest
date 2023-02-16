@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "user_id":"63df3676b3bbe5ad38510287",
-    "course_id":"63e1faa3e48532c7a8360999"
+    "course_id":"63e1fe01e48532c7a83609a8"
 
 }
 ####
@@ -16,4 +16,12 @@ content-type: application/json
 
 }
 
+####
+POST http://localhost:8000/getrelate HTTP/1.1
+content-type: application/json
 
+{
+    "user_id":"63df3676b3bbe5ad38510287",
+    "course_id":"63e1faa3e48532c7a8360999"
+
+}
