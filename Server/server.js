@@ -247,19 +247,21 @@ app.post('/getrelate', async (req, res) => {
 	console.log('cosss', course_id, user_id);
 	async function getRelate() {
 		const result = await enrollment.aggregate([
+			// {
+			// 	$lookup: {
+			// 		from: 'students',
+			// 		localField: 'user_id',
+			// 		foreignField: '_id',
+			// 		as: 'enrolled_courses',
+			// 	},
+			// },
 			{
 				$lookup: {
 					from: 'javascripts',
 					localField: 'course_id',
 					foreignField: '_id',
-					as: 'enrolled_courses',
+					as: 'courses',
 				},
-				// $lookup: {
-				// 	from: 'students',
-				// 	localField: '_id',
-				// 	foreignField: 'user_id',
-				// 	as: 'user_details',
-				// },
 			},
 		]);
 
