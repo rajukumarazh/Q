@@ -3,6 +3,7 @@ let initialState = {
 	apiData: [],
 	selectedCourse: [],
 	current_user: [],
+	enrolled_courses: [],
 };
 export const CourseSlice = createSlice({
 	name: 'CourseSlice',
@@ -37,7 +38,12 @@ export const CourseSlice = createSlice({
 			state.selectedCourse = action.payload;
 		},
 		add_user: (state, action) => {
+			// console.log('add_user', action.payload);
 			state.current_user = action.payload;
+		},
+		curr_user_course: (state, action) => {
+			// console.log('add_user', action.payload);
+			state.enrolled_courses = action.payload;
 		},
 	},
 });
@@ -48,5 +54,6 @@ export const {
 	searchedCourse,
 	selectCourse,
 	add_user,
+	curr_user_course,
 } = CourseSlice.actions;
 export default CourseSlice.reducer;

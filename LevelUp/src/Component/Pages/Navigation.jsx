@@ -45,6 +45,14 @@ function Navigation() {
 									</Link>
 								</li>
 								<li>
+									<Link
+										className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+										to="/profile"
+									>
+										course
+									</Link>
+								</li>
+								<li>
 									<a
 										className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
 										href="#"
@@ -60,6 +68,14 @@ function Navigation() {
 										About
 									</Link>
 								</li>
+								{/* <li>
+									<Link
+										to="/profile"
+										className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+									>
+										My Course
+									</Link>
+								</li> */}
 							</ul>
 						</nav>
 					</div>

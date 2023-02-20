@@ -12,6 +12,7 @@ import Javascript from './Component/Pages/Javascript';
 import Navigation from './Component/Pages/Navigation';
 import AboutUs from './Component/Pages/AboutUs';
 import CourseDetailsPage from './Component/Pages/CourseDetailsPage';
+import Profile from './Component/Pages/Profile';
 function App() {
 	// const allState = useSelector((state) => state);
 	// console.log('allStatse', allState);
@@ -28,8 +29,9 @@ function App() {
 				<Route path="/js" element={<Javascript />}></Route>
 				<Route path="/about" element={<AboutUs />}></Route>
 				<Route path="/c_details" element={<CourseDetailsPage />}></Route>
+				<Route path="/profile" element={<Profile />}></Route>
 			</Routes>
-			<WebFooter />
+			{/* <WebFooter /> */}
 		</div>
 	);
 }

@@ -4,13 +4,46 @@ import Crousel from './Crousel';
 import WebFooter from './WebFooter';
 import CourseCard from './CourseCard';
 import { useState } from 'react';
-import { sortCourse } from '../../Redux/Toolkit/CourseSlice';
+import { sortCourse, curr_user_course } from '../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
 import Review from './Review';
 import WithAuth from '../WithAuth/WithAuth';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 function Home() {
 	const [showcourse, setShowCourse] = useState(false);
 	const dispatch = useDispatch();
+	const allState = useSelector((state) => state);
+	const [enrolled_courses, setEnrolled_course] = useState();
+	useEffect(() => {
+		async function getEnrolledCourse() {
+			let dt = await axios
+				.post('http://localhost:8000/getrelate', {
+					user_id: allState?.levelUp?.current_user[0]?._id,
+				})
+				.then((result) => {
+					if (result) {
+						setEnrolled_course(() =>
+							result?.data?.filter(
+								(curr) =>
+									curr.user_id === allState?.levelUp?.current_user[0]?._id
+							)
+						);
+					}
+					console.log('datassss', result);
+				});
+			console.log('dtassss', dt);
+		}
+
+		// console.log('dts', enrolled_courses);
+
+		// if (enrolled_courses !== undefined) {
+		// 	dispatch(curr_user_course(enrolled_courses));
+		// }
+	}, []);
+
 	return (
 		<div>
 			<section className="mb-40">
