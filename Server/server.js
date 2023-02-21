@@ -264,8 +264,9 @@ app.post('/getrelate', async (req, res) => {
 				},
 			},
 		]);
-
-		res.send(result);
+		let filteredResult = result.filter((curr) => curr.user_id == user_id);
+		console.log('hello', filteredResult);
+		res.send({ course: filteredResult });
 	}
 	getRelate();
 });

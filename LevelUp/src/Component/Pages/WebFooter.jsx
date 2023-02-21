@@ -1,7 +1,7 @@
 import react from 'react';
 function WebFooter() {
 	return (
-		<div className="relative">
+		<div className="">
 			<footer className="bg-white dark:bg-gray-900 fixed bottom-0 left-0 right-0 mt-5 ">
 				<div className="grid grid-cols-2 gap-8 py-8 px-6 md:grid-cols-4">
 					<div>

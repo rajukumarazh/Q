@@ -17,33 +17,28 @@ function Home() {
 	const dispatch = useDispatch();
 	const allState = useSelector((state) => state);
 	const [enrolled_courses, setEnrolled_course] = useState();
+	let user_id = localStorage.getItem('user_id');
+	let user = JSON.parse(user_id);
+	console.log('suer', user);
 	useEffect(() => {
 		async function getEnrolledCourse() {
-			let dt = await axios
+			axios
 				.post('http://localhost:8000/getrelate', {
-					user_id: allState?.levelUp?.current_user[0]?._id,
+					user_id: user[0]?._id,
 				})
 				.then((result) => {
-					if (result) {
-						setEnrolled_course(() =>
-							result?.data?.filter(
-								(curr) =>
-									curr.user_id === allState?.levelUp?.current_user[0]?._id
-							)
-						);
-					}
-					console.log('datassss', result);
+					setEnrolled_course(result);
+					return result;
 				});
-			console.log('dtassss', dt);
 		}
+		getEnrolledCourse();
 
 		// console.log('dts', enrolled_courses);
-
-		// if (enrolled_courses !== undefined) {
-		// 	dispatch(curr_user_course(enrolled_courses));
-		// }
 	}, []);
-
+	if (enrolled_courses !== undefined) {
+		dispatch(curr_user_course(enrolled_courses?.data?.course));
+	}
+	console.log('dts', enrolled_courses);
 	return (
 		<div>
 			<section className="mb-40">

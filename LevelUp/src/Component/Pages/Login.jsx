@@ -28,11 +28,13 @@ function Login() {
 		// setRegistered(true)
 		dispatch(add_user(ar.data.user));
 		localStorage.setItem('token', ar?.data.token);
+		localStorage.setItem('user_id', JSON.stringify(ar?.data?.user));
 	};
 
 	// (function () {
 	// 	localStorage.setItem('token', 'rajukumar');
 	// })();
+
 	return (
 		<section className="h-screen">
 			<div className="px-6 h-full text-gray-800">
