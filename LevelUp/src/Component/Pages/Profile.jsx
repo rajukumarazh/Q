@@ -194,7 +194,7 @@ function Profile() {
 									<div className="h-50 " key={curr._id}>
 										<div className="rounded-lg shadow-lg bg-white max-w-sm">
 											{/* <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light"> */}
-											<Link to="/js">
+											<Link to="/view" state={{ course: curr.courses[0]._id }}>
 												<img
 													className="rounded-t-lg h-52 w-full"
 													src={
@@ -217,7 +217,6 @@ function Profile() {
 													</p>
 												) : (
 													<p className="text-gray-700 text-base mb-4">
-														{' '}
 														{curr.courses[0].description}
 													</p>
 												)}
@@ -228,7 +227,7 @@ function Profile() {
 													onClick={(e) => setAddress(e.target.value)}
 													className=" inline-block w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 												>
-													Explore
+													Start Learning
 												</button>
 											</div>
 										</div>

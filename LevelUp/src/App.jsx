@@ -13,6 +13,7 @@ import Navigation from './Component/Pages/Navigation';
 import AboutUs from './Component/Pages/AboutUs';
 import CourseDetailsPage from './Component/Pages/CourseDetailsPage';
 import Profile from './Component/Pages/Profile';
+import ViewCourse from './Component/Pages/ViewCourse';
 function App() {
 	// const allState = useSelector((state) => state);
 	// console.log('allStatse', allState);
@@ -30,6 +31,7 @@ function App() {
 				<Route path="/about" element={<AboutUs />}></Route>
 				<Route path="/c_details" element={<CourseDetailsPage />}></Route>
 				<Route path="/profile" element={<Profile />}></Route>
+				<Route path="/view" element={<ViewCourse />}></Route>
 			</Routes>
 			{/* <WebFooter /> */}
 		</div>

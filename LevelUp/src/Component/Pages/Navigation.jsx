@@ -18,7 +18,7 @@ function Navigation() {
 		<div className="relative">
 			<nav
 				id="header"
-				className="w-full z-30  fixed py-1 bg-white shadow-lg border-b border-blue-400"
+				className="w-full z-30  fixed top-0 py-1 bg-white shadow-lg border-b border-blue-400"
 			>
 				<div className="w-full flex items-center justify-between mt-0 px-6 py-2">
 					<label for="menu-toggle" className="cursor-pointer md:hidden block">
