@@ -5,11 +5,15 @@ import { useSelector } from 'react-redux';
 // import { Alldispatch } from '../../Services/ParentEvent';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import CoursePreface from '../Course/CoursePreface';
+import CourseLearning from '../Course/CourseLearning';
+import { useRef } from 'react';
 export default function ViewCourse() {
 	const [course, setCourse] = useState();
+	const [learning, setLearning] = useState(false);
 	const location = useLocation();
 	const allState = useSelector((curr) => curr);
-
+	const lt = useRef(null);
 	useEffect(() => {
 		setCourse(() =>
 			allState?.levelUp?.enrolled_courses?.filter(
@@ -17,12 +21,12 @@ export default function ViewCourse() {
 			)
 		);
 	}, [location]);
-	console.log('hello', allState);
+	console.log('hellodsf', allState);
 	console.log('hello', course?.[0].courses[0].course_name);
-	console.log('location', location.state.course);
+	console.log('locationaa', location.state.course);
 
 	return (
-		<div className="mt-14">
+		<div className="mt-14 bg-slate-100">
 			<section className="text-indigo-200 body-font p-5 bg-gray-900">
 				{/* <Link to="coursedet"> */}
 				<div className="mx-auto flex px-5  md:flex-row flex-col items-center jobcard">
@@ -83,6 +87,11 @@ export default function ViewCourse() {
 				</div>
 				{/* </Link> */}
 			</section>
+			<h1 className="mt-5 text-2xl text-red-600 text-center font-bold">
+				--Preface--{' '}
+			</h1>
+			<CoursePreface />
+			{allState.levelUp.learning_status ? <CourseLearning /> : ''}
 		</div>
 	);
 }
