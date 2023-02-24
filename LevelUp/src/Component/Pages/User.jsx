@@ -2,11 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import WebFooter from './WebFooter';
+import WebFooter from './Scratch/WebFooter';
 import WithAuth from '../WithAuth/WithAuth';
+import { useState } from 'react';
+import ProfileDetails from './ProfileDetails/ProfileDetails';
 function Profile() {
 	let AllState = useSelector((state) => state);
 	console.log('allState', AllState);
+	const [component, setComponent] = useState('default_course');
+	console.log('dddddd', component);
 	return (
 		<div>
 			<div className=" flex " style={{}}>
@@ -19,8 +23,8 @@ function Profile() {
     }
   }
 --> */}
-				<div class="min-h-screen bg-gray-100 w-1/3">
-					<div class="sidebar min-h-screen w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg">
+				<div class="min-h-screen bg-gray-100 w-1/5">
+					<div class="sidebar min-h-screen w-[3.35rem] overflow-hidden border-r  ">
 						<div class="flex h-screen flex-col justify-between  pb-6">
 							<div className="fixed">
 								<div className="w-max p-1.5">
@@ -32,9 +36,10 @@ function Profile() {
 								</div>
 								<ul className="mt-6 space-y-2 tracking-wide">
 									<li className="min-w-max">
-										<a
-											href="#"
+										<button
+											value={'default_course'}
 											aria-label="dashboard"
+											onClick={(e) => setComponent(e.target.value)}
 											className="relative flex items-center space-x-4 bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white"
 										>
 											<svg
@@ -55,12 +60,14 @@ function Profile() {
 													className="fill-current group-hover:text-sky-300"
 												></path>
 											</svg>
-											<span className="-mr-1 font-medium">Dashboard</span>
-										</a>
+											Dashboard
+										</button>
 									</li>
 									<li className="min-w-max">
-										<a
-											href="#"
+										<button
+											onClick={(e) => setComponent(() => e.target.value)}
+											// href="#"
+											value={'profile'}
 											className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -80,14 +87,15 @@ function Profile() {
 													d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
 												/>
 											</svg>
-											<span className="group-hover:text-gray-700">
-												Categories
-											</span>
-										</a>
+											Profile
+											{/* <span className="group-hover:text-gray-700">Profile</span> */}
+										</button>
 									</li>
 									<li className="min-w-max">
-										<a
-											href="#"
+										<button
+											// href="#"
+											value={'ongoing_course'}
+											onClick={(e) => setComponent(() => e.target.value)}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -107,12 +115,18 @@ function Profile() {
 													d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
 												/>
 											</svg>
-											<span className="group-hover:text-gray-700">Reports</span>
-										</a>
+											Ongoing course
+											{/* <span className="group-hover:text-gray-700">
+												{' '}
+												Ongoing course
+											</span> */}
+										</button>
 									</li>
 									<li className="min-w-max">
-										<a
-											href="#"
+										<button
+											// href="#"
+											value={'other'}
+											onClick={(e) => setComponent(() => e.target.value)}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -130,14 +144,17 @@ function Profile() {
 													d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
 												/>
 											</svg>
-											<span className="group-hover:text-gray-700">
+											Other data
+											{/* <span className="group-hover:text-gray-700">
 												Other data
-											</span>
-										</a>
+											</span> */}
+										</button>
 									</li>
 									<li className="min-w-max">
-										<a
-											href="#"
+										<button
+											value={'finance'}
+											// href="#"
+											onClick={(e) => setComponent(() => e.target.value)}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -157,14 +174,17 @@ function Profile() {
 													clip-rule="evenodd"
 												/>
 											</svg>
-											<span className="group-hover:text-gray-700">Finance</span>
-										</a>
+											Finance
+											{/* <span className="group-hover:text-gray-700">Finance</span> */}
+										</button>
 									</li>
 								</ul>
 							</div>
 							<div className="w-max -mb-3">
-								<a
-									href="#"
+								<button
+									// href="#"
+									value={'setting'}
+									onClick={(e) => setComponent(() => e.target.value)}
 									className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 								>
 									<svg
@@ -179,15 +199,16 @@ function Profile() {
 											clip-rule="evenodd"
 										/>
 									</svg>
+
 									<span className="group-hover:text-gray-700">Settings</span>
-								</a>
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div>
-					{
-						<div className=" grid grid-cols-4 gap-4 mt-28">
+					{component == 'default_course' ? (
+						<div className=" grid grid-cols-4 gap-4 mt-28 px-2 ">
 							{AllState?.levelUp?.enrolled_courses?.map((curr, i, arr) => {
 								console.log('curre', curr.courses[0]);
 								return (
@@ -235,7 +256,11 @@ function Profile() {
 								);
 							})}
 						</div>
-					}
+					) : component == 'profile' ? (
+						<ProfileDetails />
+					) : (
+						component == 'default_course'
+					)}
 				</div>
 			</div>
 		</div>

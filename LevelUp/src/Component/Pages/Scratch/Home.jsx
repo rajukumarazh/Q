@@ -2,12 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Crousel from './Crousel';
 import WebFooter from './WebFooter';
-import CourseCard from './CourseCard';
+import CourseCard from '../Course/CourseCard';
 import { useState } from 'react';
-import { sortCourse, curr_user_course } from '../../Redux/Toolkit/CourseSlice';
+import {
+	sortCourse,
+	curr_user_course,
+} from '../../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
+// import Review from '../Review';
 import Review from './Review';
-import WithAuth from '../WithAuth/WithAuth';
+import WithAuth from '../../WithAuth/WithAuth';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -73,18 +77,19 @@ function Home() {
 					<h1 className="text-xl font-bold flex-start mt-5 ">
 						World of courses
 					</h1>
-					<div>
+					<div className="relative p-2">
 						<button
 							onClick={() => setShowCourse(!showcourse)}
 							id="dropdownHoverButton"
 							data-dropdown-toggle="dropdownHover"
+							style={{ width: '172px' }}
 							data-dropdown-trigger="hover"
-							class="text-white bg-gray-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+							className="text-white bg-gray-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 							type="button"
 						>
 							Select Course
 							<svg
-								class="w-4 h-4 ml-2"
+								className="w-4 h-4 ml-2"
 								aria-hidden="true"
 								fill="none"
 								stroke="currentColor"
@@ -103,14 +108,14 @@ function Home() {
 						{showcourse == true && (
 							<div
 								id="dropdownHover"
-								class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+								className="z-10 mt-2 absolute  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
 							>
 								<ul
-									class="py-2 text-sm text-gray-700 dark:text-gray-200"
+									className="py-2 text-sm text-gray-700 dark:text-gray-200"
 									aria-labelledby="dropdownHoverButton"
 								>
 									<li onClick={() => dispatch(sortCourse('Web-Development'))}>
-										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+										<p className="block px-4 py-2   hover:bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
 											Web Development
 										</p>
 									</li>
@@ -122,7 +127,7 @@ function Home() {
 										// }
 										onClick={() => dispatch(sortCourse('backend'))}
 									>
-										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+										<p className="block px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
 											Back_End Development
 										</p>
 									</li>
@@ -134,7 +139,7 @@ function Home() {
 										// }
 										onClick={() => dispatch(sortCourse('cloud'))}
 									>
-										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+										<p className="block px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
 											Cloud Programming
 										</p>
 									</li>
@@ -146,7 +151,7 @@ function Home() {
 										// 	)
 										// }
 									>
-										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+										<p className="block px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
 											Database
 										</p>
 									</li>
@@ -158,7 +163,7 @@ function Home() {
 										// }
 										onClick={() => dispatch(sortCourse('all'))}
 									>
-										<p class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+										<p className="block px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
 											all courses
 										</p>
 									</li>

@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import { allState } from '../../Services/ParentState';
-// import { Alldispatch } from '../../Services/ParentEvent';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import CoursePreface from '../Course/CoursePreface';
-import CourseLearning from '../Course/CourseLearning';
+import CourseLearning from '../../CourseOngoing/CourseLearning';
+import CoursePreface from '../../CourseOngoing/CoursePreface';
 import { useRef } from 'react';
 export default function ViewCourse() {
 	const [course, setCourse] = useState();
-	const [learning, setLearning] = useState(false);
 	const location = useLocation();
 	const allState = useSelector((curr) => curr);
 	const lt = useRef(null);

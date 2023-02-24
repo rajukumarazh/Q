@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchedCourse } from '../../Redux/Toolkit/CourseSlice';
+import { searchedCourse } from '../../../Redux/Toolkit/CourseSlice';
 import { useNavigate } from 'react-router-dom';
 function Navigation() {
 	const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function Navigation() {
 								<li>
 									<Link
 										className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
-										to="/profile"
+										to="/user"
 									>
 										My Course
 									</Link>

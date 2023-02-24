@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import WithAuth from '../WithAuth/WithAuth';
+import WithAuth from '../../WithAuth/WithAuth';
 function Signup() {
 	const [signUpDetails, SetSignUpDetails] = useState({
 		email: '',
@@ -21,20 +21,20 @@ function Signup() {
 		setRegistered(true);
 	};
 	return (
-		<div className="flex justify-between ">
+		<div className="flex justify-between  gap-x-10">
 			<div className="h-screen bg-gradient-to-br from-blue-200 to-indigo-600 flex justify-center items-center w-full">
 				<div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
 					<img
-						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-htmlForm/draw2.webp"
+						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
 						className="w-full"
 						alt="Sample image"
 					/>
 				</div>
 				{/* <htmlForm> */}
-				<div className="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-sm">
+				<div className="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-lg max-h-max">
 					<div className="space-y-4">
-						<h1 className="text-center text-2xl font-semibold text-gray-600">
-							all starting from here
+						<h1 className="text-center text-2xl font-semibold text-red-500 underline">
+							LevelUp.com
 						</h1>
 						{/* <div>
 								<label

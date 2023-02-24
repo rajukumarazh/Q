@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-import WithAuth from '../WithAuth/WithAuth';
+import WithAuth from '../../WithAuth/WithAuth';
 import { redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { add_user } from '../../Redux/Toolkit/CourseSlice';
+import { add_user } from '../../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
 function Login() {
 	let navigate = useNavigate();

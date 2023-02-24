@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import WithAuth from '../WithAuth/WithAuth';
+import WithAuth from '../../../WithAuth/WithAuth';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { selectCourse } from '../../Redux/Toolkit/CourseSlice';
+import { selectCourse } from '../../../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 function loadScript(src) {
