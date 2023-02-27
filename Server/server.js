@@ -24,7 +24,8 @@ app.use(session({ secret: 'melody hensley is my spirit animal' }));
 var cors = require('cors');
 const javascript = require('./mongo/javascript');
 const python = require('./mongo/python');
-
+let question = require('./mongo/question');
+let answer = require('./mongo/answer');
 app.use(cors());
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@cluster0.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority';
@@ -263,12 +264,36 @@ app.post('/getrelate', async (req, res) => {
 					as: 'courses',
 				},
 			},
+			{
+				$lookup: {
+					from: 'questions',
+					localField: 'course_id',
+					foreignField: 'course',
+					as: 'questions',
+				},
+			},
 		]);
 		let filteredResult = result.filter((curr) => curr.user_id == user_id);
 		console.log('hello', filteredResult);
 		res.send({ course: filteredResult });
 	}
 	getRelate();
+});
+
+app.post('/questions', async (req, res) => {
+	// let {q_id}=req.body.q_id
+	// let quest = await question.find();
+	console.log('data', req.body.q_id);
+	let dt = await question
+		.findOne()
+		.populate('answerd_by')
+		.then((p) => p)
+		.catch((error) => console.log(error));
+	res.send({ data: dt });
+});
+app.get('/answers', async (req, res) => {
+	let ans = await answer.find();
+	console.log('hello answer', ans);
 });
 
 app.listen(8000, () => console.log('server running at 8000'));
