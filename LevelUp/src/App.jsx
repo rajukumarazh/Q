@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import Submission from './Submission';
-import Question from './Question';
+import Submission from './Component/CourseOngoing/QuizzeTrivia/Submission';
+import Question from './Component/CourseOngoing/QuizzeTrivia/Question';
 import Home from './Component/Pages/Scratch/Home';
 import Login from './Component/Pages/Authentication/Login';
 import Signup from './Component/Pages/Authentication/Signup';
@@ -16,6 +16,8 @@ import CourseDetailsPage from './Component/Pages/Course/CourseDetailsPage';
 
 import User from './Component/Pages/User';
 import ViewCourse from './Component/Pages/Course/ViewCourse';
+import CoursePlayGround from './Component/CourseOngoing/CoursePlayGround';
+import OnGoingCourse from './Component/CourseOngoing/OnGoingCourse';
 function App() {
 	// const allState = useSelector((state) => state);
 	// console.log('allStatse', allState);
@@ -23,7 +25,6 @@ function App() {
 		<div className="">
 			<Navigation />
 			<Routes>
-				<Route path="/" element={<Home />} />
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
@@ -34,6 +35,8 @@ function App() {
 				<Route path="/c_details" element={<CourseDetailsPage />}></Route>
 				<Route path="/user" element={<User />}></Route>
 				<Route path="/view" element={<ViewCourse />}></Route>
+				<Route path="/playground" element={<CoursePlayGround />}></Route>
+				<Route path="/ongoing" element={<OnGoingCourse />}></Route>
 			</Routes>
 			{/* <WebFooter /> */}
 		</div>

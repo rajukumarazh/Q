@@ -1,27 +1,28 @@
 import React, { useEffect } from 'react';
-import q from './q.json';
+import q from '../../../q.json';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+
 import {
-	chooseAnswer,
-	chooseSubject,
-	HandleMarks,
+	// setApidata,
 	submitted,
-} from './Redux/Action';
+	HandleMarks,
+	chooseAnswer,
+} from '../../../Redux/Toolkit/QuizzSlice';
 import { Navigate } from 'react-router-dom';
 function Question() {
 	const [subject, setSubject] = useState();
-	const [quest, setQuest] = useState(q[0].geography);
+	const [quest, setQuest] = useState(q[0]?.geography);
 	const [sub, setSub] = useState(false);
-	const [totalpage] = useState(quest.length);
+	const [totalpage] = useState(quest?.length);
 	const [perPage, setperPage] = useState(1);
 	const totalNumberOfPage = totalpage / perPage;
 	const [currentPage, setCurrentPage] = useState(1);
 	let dt = Object.keys(q[0]);
-	const allState = useSelector((state) => state);
+	const allState = useSelector((state) => state.levelUpQuizz);
 	console.log('hello', allState);
-	/// pagination
+	/// pagination here
 	let lastindex = currentPage * perPage;
 	let firstindex = lastindex - perPage;
 	let pages = quest.slice(firstindex, lastindex);
@@ -31,7 +32,7 @@ function Question() {
 		count.push(i);
 	}
 	const dispatch = useDispatch(chooseAnswer);
-
+	console.log('Q', q);
 	const chooseAnswerFun = (ans, id) => {
 		const filterQuestionList = allState.QNA?.map((e) => {
 			if (e.id === id) {
@@ -42,21 +43,21 @@ function Question() {
 		});
 		dispatch(chooseAnswer(filterQuestionList));
 	};
-	if (sub == true) {
-		return <Navigate to="/submitted" />;
-	}
+	// if (sub == true) {
+	// 	return <Navigate to="/submitted" />;
+	// }
 	const handleNavigate = () => {
 		let totalMarks = allState.QNA?.filter((curr) => {
 			return curr.correctAnswer == curr.choosen;
 		});
-		console.log('marks', totalMarks.length);
+		console.log('marks', totalMarks?.length);
 		setSub(!sub);
-		dispatch(HandleMarks(totalMarks), submitted(1));
+		dispatch(HandleMarks(totalMarks?.length), submitted());
 		dispatch(submitted(true));
 	};
 	return (
 		<div className="p-5 relative">
-			{currentPage == allState.QNA.length ? (
+			{currentPage == allState?.QNA?.length ? (
 				<p className="text-red-600 text-center font-semibold underline">
 					Last Question{' '}
 				</p>
@@ -157,7 +158,7 @@ function Question() {
 						onClick={() => handleNavigate()}
 						className="text-white font-semibold px-2 py-3 bg-red-600 absolute right-6 rounded-md mt-5"
 					>
-						Submit{' '}
+						Submit
 					</button>
 				)}
 		</div>

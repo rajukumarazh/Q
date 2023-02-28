@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchedCourse } from '../../../Redux/Toolkit/CourseSlice';
 import { useNavigate } from 'react-router-dom';
+import ProfileSidebar from './ProfileSidebar';
 function Navigation() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState('');
+	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
 	function logOut() {
 		localStorage.removeItem('token');
@@ -18,7 +20,7 @@ function Navigation() {
 		<div className="relative">
 			<nav
 				id="header"
-				className="w-full z-30  fixed top-0 py-1 bg-white shadow-lg border-b border-blue-400"
+				className="w-full z-30  opacity-100 fixed top-0 py-1 bg-white shadow-lg border-b border-blue-400"
 			>
 				<div className="w-full flex items-center justify-between mt-0 px-6 py-2">
 					<label for="menu-toggle" className="cursor-pointer md:hidden block">
@@ -81,6 +83,15 @@ function Navigation() {
 										My Course
 									</Link>
 								</li> */}
+								<li>
+									{
+										<img
+											src="./john.png"
+											className="w-10 rounded-full cursor-pointer"
+											onClick={() => setOpen(!open)}
+										/>
+									}
+								</li>
 							</ul>
 						</nav>
 					</div>
@@ -109,7 +120,7 @@ function Navigation() {
 							</button>
 						</div>
 					</div> */}
-					<div
+					{/* <div
 						className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4"
 						id="nav-content"
 					>
@@ -141,8 +152,9 @@ function Navigation() {
 								</Link>
 							)}
 						</div>
-					</div>
+					</div> */}
 				</div>
+				{open ? <ProfileSidebar /> : ''}
 			</nav>
 		</div>
 	);

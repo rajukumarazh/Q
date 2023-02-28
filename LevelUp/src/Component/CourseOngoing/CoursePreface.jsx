@@ -2,6 +2,7 @@ import React from 'react';
 import { changeLearnginStatus } from '../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
 	Accordion,
 	AccordionItem,
@@ -31,12 +32,13 @@ export default function CoursePreface() {
 						occaecat ut occaecat consequat est minim minim esse tempor laborum
 						consequat esse adipisicing eu reprehenderit enim.
 					</p>
-					<button
-						onClick={() => dispatch(changeLearnginStatus())}
+					<Link
+						to={'/ongoing'}
+						// onClick={() => dispatch(changeLearnginStatus())}
 						className="bg-red-400 px-2 py-1 text-white font font-semibold rounded-lg "
 					>
 						Start
-					</button>
+					</Link>
 				</AccordionItemPanel>
 			</AccordionItem>
 			<AccordionItem>
