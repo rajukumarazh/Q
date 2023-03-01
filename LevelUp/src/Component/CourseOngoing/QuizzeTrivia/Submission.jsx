@@ -1,8 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+// import {setApidata, submitted, HandleMarks, chooseAnswer } from "../"
+import {
+	setApidata,
+	submitted,
+	HandleMarks,
+	chooseAnswer,
+} from '../../../Redux/Toolkit/QuizzSlice';
+import { useDispatch } from 'react-redux';
 function Submission() {
 	const allState = useSelector((state) => state);
+	console.log('Submission', allState);
+	const dispatch = useDispatch();
+	let navigate = useNavigate();
+	function pleaseNavigate() {
+		dispatch(submitted());
+		navigate('/user');
+	}
 	return (
 		<div>
 			<div className="bg-gray-100 h-screen">
@@ -24,10 +40,11 @@ function Submission() {
 						<div className="flex justify-center">
 							<p className="text-red-500 my-2">
 								Hello folk your quizz is submitted & your earned marks is
+								{allState?.TotalMarks}
 							</p>
 							&nbsp;
 							<h1 className="text-lg font-semibold text-red-500 text-center mt-1 ">
-								&nbsp; "{allState.TotalMarks}"
+								&nbsp; "{allState?.levelUpQuizz?.TotalMarks}"
 							</h1>
 						</div>
 						<p className="text-gray-600 my-2">
@@ -36,11 +53,12 @@ function Submission() {
 						<p> Have a great day! </p>
 						<div className="flex gap-5 justify-center">
 							<div className="py-10 text-center">
-								<Link to={'/'}>
-									<button className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
-										GO BACK
-									</button>
-								</Link>
+								<button
+									onClick={pleaseNavigate}
+									className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
+								>
+									GO BACK
+								</button>
 							</div>
 							<div className="py-10 text-center">
 								<Link to={'/'}>

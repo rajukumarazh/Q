@@ -272,10 +272,29 @@ app.post('/getrelate', async (req, res) => {
 					as: 'questions',
 				},
 			},
+			{
+				$lookup: {
+					from: 'answers',
+					localField: 'course_id',
+					foreignField: 'course_id',
+					as: 'Answers',
+				},
+			},
 		]);
 		let filteredResult = result.filter((curr) => curr.user_id == user_id);
+		let dts = filteredResult.filter((curr) => {
+			let ans = curr.Answers[0];
+
+			return {
+				course: curr?.courses[0],
+				questions: curr?.questions.map((abc) => {
+					return { ...abc, ans: ans };
+				}),
+			};
+		});
+		console.log('integrating', dts);
 		console.log('hello', filteredResult);
-		res.send({ course: filteredResult });
+		res.send({ course: filteredResult, QNA: dts });
 	}
 	getRelate();
 });

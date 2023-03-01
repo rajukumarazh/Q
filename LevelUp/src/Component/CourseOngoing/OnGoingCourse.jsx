@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import Question from './QuizzeTrivia/Question';
 import Submission from './QuizzeTrivia/Submission';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 function OnGoingCourse() {
 	let allState = useSelector((state) => state.levelUpQuizz);
 	console.log('allState', allState);
+	// const location = useLocation();
+	// console.log('extractQuesChapter', location.state);
+	const [current_chapter, setCurrentChapter] = useState();
 	return (
 		<div className="mt-10">
 			{/* <!-- page --> */}
@@ -93,35 +98,51 @@ function OnGoingCourse() {
 						// style="height: 90.5vh"
 						// x-show="asideOpen"
 					>
-						<button className="  border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+						<button
+							value={'introduction'}
+							onClick={(e) => setCurrentChapter(e.target.value)}
+							className="  border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
+						>
 							<span className="text-2xl">
 								<i className="bx bx-home"></i>
 							</span>
 							<span>Introduction</span>
 						</button>
 
-						<button className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+						<button
+							value={'Data Type'}
+							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
+						>
 							<span className="text-2xl">
 								<i className="bx bx-cart"></i>
 							</span>
 							<span>Data Type</span>
 						</button>
 
-						<button className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+						<button
+							value={'Function'}
+							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
+						>
 							<span className="text-2xl">
 								<i className="bx bx-shopping-bag"></i>
 							</span>
 							<span>Function</span>
 						</button>
 
-						<button className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+						<button
+							value={'IIFE'}
+							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
+						>
 							<span className="text-2xl">
 								<i className="bx bx-heart"></i>
 							</span>
 							<span>IIFE</span>
 						</button>
 
-						<button className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+						<button
+							value={'Async_Await'}
+							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
+						>
 							<span className="text-2xl">
 								<i className="bx bx-user"></i>
 							</span>
@@ -139,7 +160,13 @@ function OnGoingCourse() {
 							cumque eaque inventore iure. Modi sunt optio mollitia repellat sed
 							ab quibusdam quos harum!
 						</p>
-						<div>{allState?.isSubmitted ? <Submission /> : <Question />}</div>
+						<div>
+							{allState?.isSubmitted ? (
+								<Submission />
+							) : (
+								<Question chapter={current_chapter} />
+							)}
+						</div>
 					</div>
 				</div>
 			</main>

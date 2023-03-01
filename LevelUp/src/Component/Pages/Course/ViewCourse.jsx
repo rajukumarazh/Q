@@ -5,10 +5,13 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import CourseLearning from '../../CourseOngoing/CourseLearning';
 import CoursePreface from '../../CourseOngoing/CoursePreface';
+import { handleCurrentCourse } from '../../../Redux/Toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
 import { useRef } from 'react';
 export default function ViewCourse() {
 	const [course, setCourse] = useState();
 	const location = useLocation();
+	const dispatch = useDispatch();
 	const allState = useSelector((curr) => curr);
 	const lt = useRef(null);
 	useEffect(() => {
@@ -18,9 +21,13 @@ export default function ViewCourse() {
 			)
 		);
 	}, [location]);
-	console.log('hellodsf', allState);
+	if (course) {
+		dispatch(handleCurrentCourse(course[0]));
+	}
+	console.log('ViewCourse', allState);
 	console.log('hello', course?.[0].courses[0].course_name);
-	console.log('locationaa', location.state.course);
+	console.log('selectedCourse', location.state.course);
+	console.log('current_course', course);
 
 	return (
 		<div className="mt-14 bg-slate-100">

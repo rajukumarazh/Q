@@ -4,7 +4,13 @@ const answerSchema = new mongoose.Schema({
 	question_id: {
 		type: mongoose.Schema.Types.ObjectId,
 	},
-	answer: {
+	course_id: {
+		type: mongoose.Schema.Types.ObjectId,
+	},
+	answers: {
+		type: Array,
+	},
+	correct_Answer: {
 		type: String,
 	},
 });

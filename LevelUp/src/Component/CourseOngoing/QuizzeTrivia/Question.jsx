@@ -11,7 +11,8 @@ import {
 	chooseAnswer,
 } from '../../../Redux/Toolkit/QuizzSlice';
 import { Navigate } from 'react-router-dom';
-function Question() {
+function Question(props) {
+	console.log('props', props);
 	const [subject, setSubject] = useState();
 	const [quest, setQuest] = useState(q[0]?.geography);
 	const [sub, setSub] = useState(false);
@@ -21,8 +22,10 @@ function Question() {
 	const [currentPage, setCurrentPage] = useState(1);
 	let dt = Object.keys(q[0]);
 	const allState = useSelector((state) => state.levelUpQuizz);
+	const allState2 = useSelector((state) => state);
 	console.log('hello', allState);
 	/// pagination here
+	console.log('hello2', allState2);
 	let lastindex = currentPage * perPage;
 	let firstindex = lastindex - perPage;
 	let pages = quest.slice(firstindex, lastindex);

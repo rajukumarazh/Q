@@ -39,15 +39,14 @@ export const QuizzSlice = createSlice({
 		// 				state.Question[curr];
 		// 			}
 		// 		});
-
 		//     },
 		HandleMarks: (state, action) => {
 			console.log('MarksAction', action.payload);
-			state.TotalMarks = action.payload.length;
+			state.TotalMarks = action.payload;
 		},
 		submitted: (state, action) => {
 			console.log('submit_binary', action.payload);
-			state.isSubmitted == !state.isSubmitted;
+			state.isSubmitted = !state.isSubmitted;
 		},
 		setApidata: (state, action) => {
 			console.log('dataRecieve', action.payload);

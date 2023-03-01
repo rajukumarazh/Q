@@ -7,10 +7,13 @@ const questSchema = new mongoose.Schema({
 	question: {
 		type: String,
 	},
-	answerd_by: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'answer',
+	chapter: {
+		type: String,
 	},
+	// answerd_by: {
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'answer',
+	// },
 });
 
 module.exports = mongoose.model('question', questSchema);

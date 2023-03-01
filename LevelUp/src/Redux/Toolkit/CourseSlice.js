@@ -5,6 +5,7 @@ let initialState = {
 	current_user: [],
 	enrolled_courses: [],
 	learning_status: false,
+	current_course: [],
 };
 export const CourseSlice = createSlice({
 	name: 'CourseSlice',
@@ -49,6 +50,9 @@ export const CourseSlice = createSlice({
 		changeLearnginStatus: (state, action) => {
 			state.learning_status = !state.learning_status;
 		},
+		handleCurrentCourse: (state, action) => {
+			state.current_course = action.payload;
+		},
 	},
 });
 export const {
@@ -60,5 +64,6 @@ export const {
 	add_user,
 	curr_user_course,
 	changeLearnginStatus,
+	handleCurrentCourse,
 } = CourseSlice.actions;
 export default CourseSlice.reducer;

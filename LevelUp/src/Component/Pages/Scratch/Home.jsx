@@ -42,7 +42,7 @@ function Home() {
 	if (enrolled_courses !== undefined) {
 		dispatch(curr_user_course(enrolled_courses?.data?.course));
 	}
-	console.log('dts', enrolled_courses);
+	console.log('dtsHomePage', enrolled_courses);
 	return (
 		<div>
 			<section className="mb-40">
