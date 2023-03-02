@@ -6,16 +6,18 @@ const initialState = {
 	Question: q[0],
 	TotalMarks: '',
 	isSubmitted: false,
+	QNA2: [],
 };
 export const QuizzSlice = createSlice({
 	name: 'QuizzSlice',
 	initialState,
 	reducers: {
 		data: [],
-		// allApiData: (state, action) => {
-		// 	state.apiData = action.payload;
-		// 	state.sort_course = action.payload;
-		// },
+		enrolledCourseTrivia: (state, action) => {
+			console.log('dataSaga', action.payload);
+			// state.apiData = action.payload;
+			state.QNA2 = action.payload;
+		},
 		// fetchApiData: (state, action) => {
 		// 	state;
 		// },
@@ -53,6 +55,11 @@ export const QuizzSlice = createSlice({
 		},
 	},
 });
-export const { setApidata, submitted, HandleMarks, chooseAnswer } =
-	QuizzSlice.actions;
+export const {
+	setApidata,
+	submitted,
+	HandleMarks,
+	chooseAnswer,
+	enrolledCourseTrivia,
+} = QuizzSlice.actions;
 export default QuizzSlice.reducer;

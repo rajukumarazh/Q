@@ -282,15 +282,14 @@ app.post('/getrelate', async (req, res) => {
 			},
 		]);
 		let filteredResult = result.filter((curr) => curr.user_id == user_id);
-		let dts = filteredResult.filter((curr) => {
-			let ans = curr.Answers[0];
-
+		let dts = filteredResult?.map((curr) => {
 			return {
-				course: curr?.courses[0],
-				questions: curr?.questions.map((abc) => {
-					return { ...abc, ans: ans };
+				course_id: curr.course_id,
+				qeust: curr.questions.map((c) => {
+					return { ...c, ans: curr.Answers[0] };
 				}),
 			};
+			// return { quest: 'euet', ans: curr.Answers[0] };
 		});
 		console.log('integrating', dts);
 		console.log('hello', filteredResult);

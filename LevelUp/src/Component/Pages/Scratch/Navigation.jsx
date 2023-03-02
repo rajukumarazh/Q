@@ -15,7 +15,7 @@ function Navigation() {
 		navigate('/login');
 	}
 	let details = localStorage.getItem('token');
-
+	console.log('helloToken', details);
 	return (
 		<div className="relative">
 			<nav
@@ -84,13 +84,13 @@ function Navigation() {
 									</Link>
 								</li> */}
 								<li>
-									{
+									{details && (
 										<img
 											src="./john.png"
 											className="w-10 rounded-full cursor-pointer"
 											onClick={() => setOpen(!open)}
 										/>
-									}
+									)}
 								</li>
 							</ul>
 						</nav>
@@ -154,7 +154,7 @@ function Navigation() {
 						</div>
 					</div> */}
 				</div>
-				{open ? <ProfileSidebar /> : ''}
+				{open && details ? <ProfileSidebar /> : ''}
 			</nav>
 		</div>
 	);

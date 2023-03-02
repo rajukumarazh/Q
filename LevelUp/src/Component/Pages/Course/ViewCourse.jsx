@@ -16,7 +16,7 @@ export default function ViewCourse() {
 	const lt = useRef(null);
 	useEffect(() => {
 		setCourse(() =>
-			allState?.levelUp?.enrolled_courses?.filter(
+			allState?.levelUp?.enrolled_courses?.course.filter(
 				(curr) => curr.course_id == location?.state?.course
 			)
 		);

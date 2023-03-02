@@ -40,7 +40,7 @@ function Home() {
 		// console.log('dts', enrolled_courses);
 	}, []);
 	if (enrolled_courses !== undefined) {
-		dispatch(curr_user_course(enrolled_courses?.data?.course));
+		dispatch(curr_user_course(enrolled_courses?.data));
 	}
 	console.log('dtsHomePage', enrolled_courses);
 	return (
