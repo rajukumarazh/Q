@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import CourseLearning from '../../CourseOngoing/CourseLearning';
-import CoursePreface from '../../CourseOngoing/CoursePreface';
-import { handleCurrentCourse } from '../../../Redux/Toolkit/CourseSlice';
-import { useDispatch } from 'react-redux';
-import { useRef } from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import CourseLearning from "../../CourseOngoing/CourseLearning";
+import CoursePreface from "../../CourseOngoing/CoursePreface";
+import { handleCurrentCourse } from "../../../Redux/Toolkit/CourseSlice";
+import { useDispatch } from "react-redux";
+import { useRef } from "react";
 export default function ViewCourse() {
 	const [course, setCourse] = useState();
 	const location = useLocation();
@@ -17,18 +17,17 @@ export default function ViewCourse() {
 	useEffect(() => {
 		setCourse(() =>
 			allState?.levelUp?.enrolled_courses?.course.filter(
-				(curr) => curr.course_id == location?.state?.course
-			)
+				(curr) => curr.course_id == location?.state?.course,
+			),
 		);
 	}, [location]);
 	if (course) {
 		dispatch(handleCurrentCourse(course[0]));
 	}
-	console.log('ViewCourse', allState);
-	console.log('hello', course?.[0].courses[0].course_name);
-	console.log('selectedCourse', location.state.course);
-	console.log('current_course', course);
-
+	console.log("ViewCourse", allState);
+	console.log("hello", course?.[0].courses[0].course_name);
+	console.log("selectedCourse", location.state.course);
+	console.log("current_course", course);
 	return (
 		<div className="mt-14 bg-slate-100">
 			<section className="text-indigo-200 body-font p-5 bg-gray-900">
@@ -43,21 +42,30 @@ export default function ViewCourse() {
 									</span>
 									<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-100">
 										Namaste &nbsp;
-										{course?.[0].courses[0].course_name}
+										{
+											course?.[0].courses[0]
+												.course_name
+										}
 										<br className="hidden lg:inline-block" />
 										{/* enroll now */}
 									</h1>
 									<p className="text-indigo-200 text-base pb-6">
-										From local banks to local government, we partner with
-										organizations on their journey to digital transformation.
-										Our customers include 15 million professionals in 175
-										countries and 800 of the fortune 1000.
+										From local banks to local
+										government, we partner with
+										organizations on their journey
+										to digital transformation. Our
+										customers include 15 million
+										professionals in 175 countries
+										and 800 of the fortune 1000.
 									</p>
 									<p className="text-indigo-200 text-base pb-8">
-										We can't believe how far we have come in the last 6 months.
-										I really did not think this awesome career move would come
-										so quickly. Thanks to each of you put into SI and the
-										partner relationships.
+										We can't believe how far we
+										have come in the last 6
+										months. I really did not think
+										this awesome career move would
+										come so quickly. Thanks to
+										each of you put into SI and
+										the partner relationships.
 									</p>
 									<div className="flex items-center justify-between">
 										<div className="flex items-center pb-12">
@@ -69,9 +77,11 @@ export default function ViewCourse() {
 												/>
 											</div>
 											<p className="text-indigo-200 font-bold ml-3">
-												Mr Akshay Saini <br />
+												Mr Akshay Saini
+												<br />
 												<span className="text-indigo-200 text-base font-light">
-													Namaste React & Namaste js
+													Namaste React &
+													Namaste js
 												</span>
 											</p>
 										</div>
@@ -92,10 +102,10 @@ export default function ViewCourse() {
 				{/* </Link> */}
 			</section>
 			<h1 className="mt-5 text-2xl text-red-600 text-center font-bold">
-				--Preface--{' '}
+				--Preface--{" "}
 			</h1>
 			<CoursePreface />
-			{allState.levelUp.learning_status ? <CourseLearning /> : ''}
+			{allState.levelUp.learning_status ? <CourseLearning /> : ""}
 		</div>
 	);
 }

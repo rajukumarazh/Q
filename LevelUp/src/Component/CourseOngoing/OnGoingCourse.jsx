@@ -1,16 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Question from './QuizzeTrivia/Question';
-import Submission from './QuizzeTrivia/Submission';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import Question from "./QuizzeTrivia/Question";
+import Submission from "./QuizzeTrivia/Submission";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { current } from "@reduxjs/toolkit";
+import { handleQuizzData } from "../../Redux/Toolkit/QuizzSlice";
+import { useDispatch } from "react-redux";
 function OnGoingCourse() {
-	let allState = useSelector((state) => state.levelUpQuizz);
-	console.log('allState', allState);
-	// const location = useLocation();
-	// console.log('extractQuesChapter', location.state);
-	const [current_chapter, setCurrentChapter] = useState();
+	let dispatch = useDispatch();
+	let allState = useSelector((state) => state);
+	console.log("allStateOngoing", allState);
+	const location = useLocation();
+	console.log("expppp", location.state);
+	const [current_chapter, setCurrentChapter] = useState({
+		chapter: "",
+		quest: "",
+	});
+	let currCourseQuizz = allState?.levelUp.enrolled_courses.QNA?.filter(
+		(curr) => curr.course_id == location?.state?.course,
+	);
+
+	useEffect(() => {
+		let currCourseQuizz = allState?.levelUp.enrolled_courses.QNA?.filter(
+			(curr) => curr.course_id == location?.state?.course,
+		);
+		if (currCourseQuizz) {
+			dispatch(handleQuizzData(currCourseQuizz[0]?.qeust));
+		}
+	}, []);
+	console.log("helloOngoing", currCourseQuizz[0]);
+	console.log("hello", current_chapter);
 	return (
 		<div className="mt-10">
 			{/* <!-- page --> */}
@@ -19,7 +40,9 @@ function OnGoingCourse() {
 				className="min-h-screen w-full bg-gray-100 text-gray-700"
 				x-data="layout"
 			>
-				<h1 className="font-bold text-lg text-center">Course Name</h1>
+				<h1 className="font-bold text-lg text-center">
+					Course Name
+				</h1>
 				{/* <!-- header page --> */}
 				{/* <header className="flex w-full items-center justify-between border-b-2 border-gray-200 bg-white p-2">
 					<!-- logo -->
@@ -99,8 +122,10 @@ function OnGoingCourse() {
 						// x-show="asideOpen"
 					>
 						<button
-							value={'introduction'}
-							onClick={(e) => setCurrentChapter(e.target.value)}
+							value={"introduction"}
+							onClick={(e) =>
+								setCurrentChapter(e.target.value)
+							}
 							className="  border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
 						>
 							<span className="text-2xl">
@@ -110,7 +135,7 @@ function OnGoingCourse() {
 						</button>
 
 						<button
-							value={'Data Type'}
+							value={"Data Type"}
 							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
 						>
 							<span className="text-2xl">
@@ -120,7 +145,7 @@ function OnGoingCourse() {
 						</button>
 
 						<button
-							value={'Function'}
+							value={"Function"}
 							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
 						>
 							<span className="text-2xl">
@@ -130,7 +155,7 @@ function OnGoingCourse() {
 						</button>
 
 						<button
-							value={'IIFE'}
+							value={"IIFE"}
 							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
 						>
 							<span className="text-2xl">
@@ -140,7 +165,7 @@ function OnGoingCourse() {
 						</button>
 
 						<button
-							value={'Async_Await'}
+							value={"Async_Await"}
 							className=" border-2 flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600"
 						>
 							<span className="text-2xl">
@@ -153,18 +178,24 @@ function OnGoingCourse() {
 					{/* <!-- main content page --> */}
 					<div className="w-full p-4">
 						<p>
-							Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
-							quam odit officiis magni doloribus ipsa dolore, dolores nihil
-							accusantium labore, incidunt autem iure quae vitae voluptate, esse
-							asperiores aliquam repellat. Harum aliquid non officiis porro at
-							cumque eaque inventore iure. Modi sunt optio mollitia repellat sed
-							ab quibusdam quos harum!
+							Lorem ipsum dolor sit amet consectetur,
+							adipisicing elit. Expedita quam odit officiis
+							magni doloribus ipsa dolore, dolores nihil
+							accusantium labore, incidunt autem iure quae
+							vitae voluptate, esse asperiores aliquam
+							repellat. Harum aliquid non officiis porro at
+							cumque eaque inventore iure. Modi sunt optio
+							mollitia repellat sed ab quibusdam quos
+							harum!
 						</p>
 						<div>
 							{allState?.isSubmitted ? (
 								<Submission />
 							) : (
-								<Question chapter={current_chapter} />
+								<Question
+									quest={currCourseQuizz[0]}
+									chapter={current_chapter}
+								/>
 							)}
 						</div>
 					</div>

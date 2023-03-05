@@ -1,16 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import WebFooter from './Scratch/WebFooter';
-import WithAuth from '../WithAuth/WithAuth';
-import { useState } from 'react';
-import ProfileDetails from './ProfileDetails/ProfileDetails';
+import React from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import WebFooter from "./Scratch/WebFooter";
+import WithAuth from "../WithAuth/WithAuth";
+import { useState } from "react";
+import ProfileDetails from "./ProfileDetails/ProfileDetails";
+import RecentsCourse from "../CourseOngoing/RecentsCourse";
+import ClientHelp from "../Support/ClientHelp";
 function Profile() {
 	let AllState = useSelector((state) => state);
-	console.log('allState', AllState);
-	const [component, setComponent] = useState('default_course');
-	console.log('dddddd', component);
+	console.log("allState", AllState);
+	const [component, setComponent] = useState("default_course");
+	console.log("dddddd", component);
 	return (
 		<div>
 			<div className=" flex " style={{}}>
@@ -37,9 +39,13 @@ function Profile() {
 								<ul className="mt-6 space-y-2 tracking-wide">
 									<li className="min-w-max">
 										<button
-											value={'default_course'}
+											value={"default_course"}
 											aria-label="dashboard"
-											onClick={(e) => setComponent(e.target.value)}
+											onClick={(e) =>
+												setComponent(
+													e.target.value,
+												)
+											}
 											className="relative flex items-center space-x-4 bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white"
 										>
 											<svg
@@ -65,9 +71,15 @@ function Profile() {
 									</li>
 									<li className="min-w-max">
 										<button
-											onClick={(e) => setComponent(() => e.target.value)}
+											onClick={(e) =>
+												setComponent(
+													() =>
+														e.target
+															.value,
+												)
+											}
 											// href="#"
-											value={'profile'}
+											value={"profile"}
 											className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -94,8 +106,14 @@ function Profile() {
 									<li className="min-w-max">
 										<button
 											// href="#"
-											value={'ongoing_course'}
-											onClick={(e) => setComponent(() => e.target.value)}
+											value={"ongoing_course"}
+											onClick={(e) =>
+												setComponent(
+													() =>
+														e.target
+															.value,
+												)
+											}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -125,8 +143,14 @@ function Profile() {
 									<li className="min-w-max">
 										<button
 											// href="#"
-											value={'other'}
-											onClick={(e) => setComponent(() => e.target.value)}
+											value={"other"}
+											onClick={(e) =>
+												setComponent(
+													() =>
+														e.target
+															.value,
+												)
+											}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -152,9 +176,15 @@ function Profile() {
 									</li>
 									<li className="min-w-max">
 										<button
-											value={'finance'}
+											value={"help"}
 											// href="#"
-											onClick={(e) => setComponent(() => e.target.value)}
+											onClick={(e) =>
+												setComponent(
+													() =>
+														e.target
+															.value,
+												)
+											}
 											className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 										>
 											<svg
@@ -174,7 +204,7 @@ function Profile() {
 													clip-rule="evenodd"
 												/>
 											</svg>
-											Finance
+											Help
 											{/* <span className="group-hover:text-gray-700">Finance</span> */}
 										</button>
 									</li>
@@ -183,8 +213,12 @@ function Profile() {
 							<div className="w-max -mb-3">
 								<button
 									// href="#"
-									value={'setting'}
-									onClick={(e) => setComponent(() => e.target.value)}
+									value={"setting"}
+									onClick={(e) =>
+										setComponent(
+											() => e.target.value,
+										)
+									}
 									className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600"
 								>
 									<svg
@@ -200,31 +234,45 @@ function Profile() {
 										/>
 									</svg>
 
-									<span className="group-hover:text-gray-700">Settings</span>
+									<span className="group-hover:text-gray-700">
+										Settings
+									</span>
 								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div>
-					{component == 'default_course' ? (
+					{component == "default_course" ? (
 						<div className=" grid grid-cols-4 gap-4 mt-28 px-2 ">
 							{AllState?.levelUp?.enrolled_courses?.course?.map(
 								(curr, i, arr) => {
 									return (
-										<div className="h-50 " key={curr._id}>
+										<div
+											className="h-50 "
+											key={curr._id}
+										>
 											<div className="rounded-lg shadow-lg bg-white max-w-sm">
 												{/* <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light"> */}
 												<Link
 													to="/view"
-													state={{ course: curr.courses[0]._id }}
+													state={{
+														course: curr
+															.courses[0]
+															._id,
+													}}
 												>
 													<img
 														className="rounded-t-lg h-52 w-full"
 														src={
-															curr.courses[0].img == undefined
-																? 'https://mdbootstrap.com/img/new/standard/nature/182.jpg'
-																: curr.courses[0].img
+															curr
+																.courses[0]
+																.img ==
+															undefined
+																? "https://mdbootstrap.com/img/new/standard/nature/182.jpg"
+																: curr
+																		.courses[0]
+																		.img
 														}
 														alt="not_found"
 													/>
@@ -232,38 +280,79 @@ function Profile() {
 
 												<div className="p-5">
 													<h5 className="text-gray-900 text-xl font-medium mb-2">
-														{curr.courses[0].name}
+														{
+															curr
+																.courses[0]
+																.name
+														}
 													</h5>
-													{curr.courses[0].description == undefined ? (
+													{curr
+														.courses[0]
+														.description ==
+													undefined ? (
 														<p className="text-gray-700 text-base mb-4">
-															Some quick example text to build on the card title
-															and make up the bulk of the card's content.
+															Some
+															quick
+															example
+															text
+															to
+															build
+															on
+															the
+															card
+															title
+															and
+															make
+															up
+															the
+															bulk
+															of
+															the
+															card's
+															content.
 														</p>
 													) : (
 														<p className="text-gray-700 text-base mb-4">
-															{curr.courses[0].description}
+															{
+																curr
+																	.courses[0]
+																	.description
+															}
 														</p>
 													)}
 
 													<button
 														type="button"
 														value="js"
-														onClick={(e) => setAddress(e.target.value)}
+														onClick={(
+															e,
+														) =>
+															setAddress(
+																e
+																	.target
+																	.value,
+															)
+														}
 														className=" inline-block w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 													>
-														Start Learning
+														Start
+														Learning
 													</button>
 												</div>
 											</div>
 										</div>
 									);
-								}
+								},
 							)}
 						</div>
-					) : component == 'profile' ? (
+					) : component == "profile" ? (
 						<ProfileDetails />
+					) : component == "ongoing_course" ? (
+						<RecentsCourse />
+					) : component == "help" ? (
+						<ClientHelp />
 					) : (
-						component == 'default_course'
+						component == "default_course"
 					)}
 				</div>
 			</div>

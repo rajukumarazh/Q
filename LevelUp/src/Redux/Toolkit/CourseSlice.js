@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 let initialState = {
 	apiData: [],
 	selectedCourse: [],
@@ -6,9 +6,10 @@ let initialState = {
 	enrolled_courses: [],
 	learning_status: false,
 	current_course: [],
+	current_course_quizz: [],
 };
 export const CourseSlice = createSlice({
-	name: 'CourseSlice',
+	name: "CourseSlice",
 	initialState,
 	reducers: {
 		allApiData: (state, action) => {
@@ -19,7 +20,7 @@ export const CourseSlice = createSlice({
 			state;
 		},
 		sortCourse: (state, action) => {
-			console.log('stateAction', action.payload);
+			console.log("stateAction", action.payload);
 
 			state.sort_course = state.apiData.filter((curr) => {
 				if (curr.category == action.payload) {
@@ -28,10 +29,13 @@ export const CourseSlice = createSlice({
 			});
 		},
 		searchedCourse: (state, action) => {
-			console.log('stateAction', action.payload);
+			console.log("stateAction", action.payload);
 
 			state.sort_course = state.apiData.filter((curr) => {
-				if (curr.course_name.toLowerCase() == action.payload.toLowerCase()) {
+				if (
+					curr.course_name.toLowerCase() ==
+					action.payload.toLowerCase()
+				) {
 					return curr;
 				}
 			});
@@ -66,4 +70,5 @@ export const {
 	changeLearnginStatus,
 	handleCurrentCourse,
 } = CourseSlice.actions;
+
 export default CourseSlice.reducer;
