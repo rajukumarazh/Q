@@ -6,10 +6,15 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 function OnGoingCourse() {
-	let allState = useSelector((state) => state.levelUpQuizz);
-	console.log('allState', allState);
-	// const location = useLocation();
-	// console.log('extractQuesChapter', location.state);
+	let allState = useSelector((state) => state);
+	console.log('allStateOngoing', allState);
+	const location = useLocation();
+	console.log('extractQuesChapter', location.state);
+	let questions = allState?.levelUp?.enrolled_courses?.QNA.filter(
+		(curr) => curr?.course_id == location.state.value
+	);
+	let qt = questions[0]?.qeust;
+	console.log('questionssdsd', questions[0]?.qeust);
 	const [current_chapter, setCurrentChapter] = useState();
 	return (
 		<div className="mt-10">
@@ -164,7 +169,7 @@ function OnGoingCourse() {
 							{allState?.isSubmitted ? (
 								<Submission />
 							) : (
-								<Question chapter={current_chapter} />
+								<Question triviaData={{ current_chapter, qt }} />
 							)}
 						</div>
 					</div>

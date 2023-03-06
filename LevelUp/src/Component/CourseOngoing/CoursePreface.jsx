@@ -15,6 +15,8 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 export default function CoursePreface() {
+	const allState = useSelector((state) => state);
+	console.log('state', allState);
 	let dispatch = useDispatch();
 	return (
 		<Accordion className="p-4">
@@ -33,7 +35,8 @@ export default function CoursePreface() {
 						consequat esse adipisicing eu reprehenderit enim.
 					</p>
 					<Link
-						to={'/ongoing'}
+						to="/ongoing"
+						state={{ value: allState?.levelUp?.current_course?.course_id }}
 						// onClick={() => dispatch(changeLearnginStatus())}
 						className="bg-red-400 px-2 py-1 text-white font font-semibold rounded-lg "
 					>

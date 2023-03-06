@@ -28,7 +28,10 @@ export default function ViewCourse() {
 	console.log('hello', course?.[0].courses[0].course_name);
 	console.log('selectedCourse', location.state.course);
 	console.log('current_course', course);
-
+	let qeustions = allState?.levelUp?.enrolled_courses?.QNA?.filter(
+		(curr) => curr.course_id == location.state.course
+	);
+	console.log('qeustions', qeustions[0]?.qeust);
 	return (
 		<div className="mt-14 bg-slate-100">
 			<section className="text-indigo-200 body-font p-5 bg-gray-900">
@@ -92,7 +95,7 @@ export default function ViewCourse() {
 				{/* </Link> */}
 			</section>
 			<h1 className="mt-5 text-2xl text-red-600 text-center font-bold">
-				--Preface--{' '}
+				--Preface--
 			</h1>
 			<CoursePreface />
 			{allState.levelUp.learning_status ? <CourseLearning /> : ''}
