@@ -1,20 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import q from '../../q.json';
+import q from "../../q.json";
 const initialState = {
 	QNA: [...q[0].geography],
 	Question: q[0],
-	TotalMarks: '',
+	TotalMarks: "",
 	isSubmitted: false,
 	QNA2: [],
 };
 export const QuizzSlice = createSlice({
-	name: 'QuizzSlice',
+	name: "QuizzSlice",
 	initialState,
 	reducers: {
 		data: [],
 		enrolledCourseTrivia: (state, action) => {
-			console.log('dataSaga', action.payload);
+			console.log("dataSaga", action.payload);
 			// state.apiData = action.payload;
 			state.QNA2 = action.payload;
 		},
@@ -31,8 +31,10 @@ export const QuizzSlice = createSlice({
 		// 	});
 		// },
 		chooseAnswer: (state, action) => {
-			console.log('actionData', action.payload);
-			state.QNA = action.payload;
+			console.log("actionData", action.payload);
+			const merge3 = [...state.QNA2, action.payload].flat(1);
+			// state.QNA2 = [...state.QNA2, action.payload];
+			state.QNA2 = merge3;
 		},
 		//   chooseSubject : (state,action) => {
 		//         console.log('selectedSubject', action.payload);
@@ -43,15 +45,18 @@ export const QuizzSlice = createSlice({
 		// 		});
 		//     },
 		HandleMarks: (state, action) => {
-			console.log('MarksAction', action.payload);
+			console.log("MarksAction", action.payload);
 			state.TotalMarks = action.payload;
 		},
 		submitted: (state, action) => {
-			console.log('submit_binary', action.payload);
+			console.log("submit_binary", action.payload);
 			state.isSubmitted = !state.isSubmitted;
 		},
 		setApidata: (state, action) => {
-			console.log('dataRecieve', action.payload);
+			console.log("dataRecieve", action.payload);
+		},
+		handleQuizzData: (state, action) => {
+			state.current_course_quizz = action.payload;
 		},
 	},
 });
@@ -61,5 +66,6 @@ export const {
 	HandleMarks,
 	chooseAnswer,
 	enrolledCourseTrivia,
+	handleQuizzData,
 } = QuizzSlice.actions;
 export default QuizzSlice.reducer;

@@ -1,34 +1,38 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const student = require('./student');
-const dotenv = require('dotenv');
+const express = require("express");
+const mongoose = require("mongoose");
+const student = require("./student");
+const dotenv = require("dotenv");
 // const User = require('./mongo/photo');
-const enrollment = require('./mongo/enrollment');
-const { User, Blog } = require('./mongo/photo');
+const enrollment = require("./mongo/enrollment");
+const { User, Blog } = require("./mongo/photo");
 const app = express();
+var socket = require("socket.io");
+var cors = require("cors");
 // const enrollment = require('./mongo/enrollment');
-const crypto = require('crypto');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const accessTokenSecret = 'youraccesstokensecret';
-const js = require('./mongo/javascript');
-const Razorpay = require('razorpay');
+const crypto = require("crypto");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const accessTokenSecret = "youraccesstokensecret";
+const js = require("./mongo/javascript");
+const Razorpay = require("razorpay");
 app.use(bodyParser.json());
 // const course = require('./course.json');
 // After you declare "app"
-const course = require('./mongo/course');
-app.use(session({ secret: 'melody hensley is my spirit animal' }));
-var cors = require('cors');
-const javascript = require('./mongo/javascript');
-const python = require('./mongo/python');
-let question = require('./mongo/question');
-let answer = require('./mongo/answer');
+const course = require("./mongo/course");
+app.use(session({ secret: "melody hensley is my spirit animal" }));
+var cors = require("cors");
+app.use(cors());
+
+const javascript = require("./mongo/javascript");
+const python = require("./mongo/python");
+let question = require("./mongo/question");
+let answer = require("./mongo/answer");
 app.use(cors());
 const uri =
-	'mongodb+srv://raju:Ra%409058837496@cluster0.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority';
+	"mongodb+srv://raju:Ra%409058837496@cluster0.kjkyk5j.mongodb.net/cluster0?retryWrites=true&w=majority";
 // mongodb+srv://raju:<password>@cluster0.uwtgdvq.mongodb.net/test
 // mongodb+srv://raju:<password>@cluster0.uwtgdvq.mongodb.net/test
 const options = {
@@ -52,9 +56,9 @@ passport.use(
 			}
 			return done(null, std);
 		});
-	})
+	}),
 );
-app.post('/login', passport.authenticate('local'), function (req, res) {
+app.post("/login", passport.authenticate("local"), function (req, res) {
 	res.send(res);
 });
 passport.serializeUser((std, done) => {
@@ -72,28 +76,28 @@ passport.deserializeUser((id, done) => {
 	});
 });
 mongoose.connect(uri, options).then(() => {
-	console.log('database connnected');
+	console.log("database connnected");
 });
-app.get('/user', async (req, res) => {
-	res.send({ response: 'all fine' });
+app.get("/user", async (req, res) => {
+	res.send({ response: "all fine" });
 });
-app.get('/all', async (req, res) => {
+app.get("/all", async (req, res) => {
 	const data = await course.find();
 	// console.log('data', data);
 	res.send(data);
 });
-app.get('/js', async (req, res) => {
+app.get("/js", async (req, res) => {
 	const data = await javascript.find();
 	res.send(data);
 });
-app.get('/python', async (req, res) => {
+app.get("/python", async (req, res) => {
 	const data = await python.find();
 	res.send(data);
 });
 /// signup student
 
-app.post('/signup', async (req, res) => {
-	console.log('res', req.body);
+app.post("/signup", async (req, res) => {
+	console.log("res", req.body);
 	const data = new student({
 		email: req.body.email,
 		password: req.body.password,
@@ -103,8 +107,8 @@ app.post('/signup', async (req, res) => {
 	res.status(200).json(dataToSave);
 });
 
-app.post('/log', async (req, res) => {
-	console.log('res', req.body);
+app.post("/log", async (req, res) => {
+	console.log("res", req.body);
 	const data = await student.find();
 	const user = data?.filter((u) => {
 		if (u.email == req.body.email && u.password == req.body.password) {
@@ -113,28 +117,28 @@ app.post('/log', async (req, res) => {
 	});
 	const accessToken = jwt.sign(
 		{ username: user[0]?.email, paasword: user[0]?.password },
-		accessTokenSecret
+		accessTokenSecret,
 	);
 	user.length > 0 && res.json({ token: accessToken, user: user });
 
-	console.log('token', accessToken);
+	console.log("token", accessToken);
 
-	console.log('logIndetails', user);
+	console.log("logIndetails", user);
 
 	async function getRelate() {
 		if (data.length > 0) {
 			const result = await enrollment.aggregate([
 				{
 					$lookup: {
-						from: 'javascripts',
-						localField: '_id',
-						foreignField: 'course_id',
-						as: 'enrolled_courses',
+						from: "javascripts",
+						localField: "_id",
+						foreignField: "course_id",
+						as: "enrolled_courses",
 					},
 				},
 			]);
 
-			console.log('send', result);
+			console.log("send", result);
 		}
 	}
 	getRelate();
@@ -142,43 +146,49 @@ app.post('/log', async (req, res) => {
 // payment apis
 
 var razorpay = new Razorpay({
-	key_id: 'rzp_test_LUoWzQJZYjdLNB',
-	key_secret: 'gAz9uhd7QvbNqLYP6DT3rHHn',
+	key_id: "rzp_test_LUoWzQJZYjdLNB",
+	key_secret: "gAz9uhd7QvbNqLYP6DT3rHHn",
 });
-app.get('/logo.svg', (req, res) => {
-	res.sendFile(path.join(__dirname, 'logo.svg'));
+app.get("/logo.svg", (req, res) => {
+	res.sendFile(path.join(__dirname, "logo.svg"));
 });
 
-app.post('/verification', async (req, res) => {
-	console.log('req', req.body);
+app.post("/verification", async (req, res) => {
+	console.log("req", req.body);
 	try {
 		const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
 			req.body;
 
 		// Pass yours key_secret here
-		const key_secret = 'gAz9uhd7QvbNqLYP6DT3rHHn';
+		const key_secret = "gAz9uhd7QvbNqLYP6DT3rHHn";
 
 		// Creating hmac object
-		let hmac = crypto.createHmac('sha256', key_secret);
+		let hmac = crypto.createHmac("sha256", key_secret);
 
 		// Passing the data to be hashed
-		hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
+		hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
 
 		// Creating the hmac in the required format
-		const generated_signature = hmac.digest('hex');
+		const generated_signature = hmac.digest("hex");
 		if (razorpay_signature === generated_signature) {
-			res.json({ success: true, message: 'Payment has been verified' });
+			res.json({
+				success: true,
+				message: "Payment has been verified",
+			});
 		} else {
-			console.log('sign failed', razorpay_order_id);
-			res.json({ success: false, message: 'Payment verification failed' });
+			console.log("sign failed", razorpay_order_id);
+			res.json({
+				success: false,
+				message: "Payment verification failed",
+			});
 		}
 	} catch (error) {
 		res.status(500).send(error);
 	}
 });
 
-app.post('/razorpay', async (req, res) => {
-	console.log('body', req.body);
+app.post("/razorpay", async (req, res) => {
+	console.log("body", req.body);
 	let { data } = req.body;
 	// var amount = data?.reduce(function (sum, number) {
 	// 	const updatedSum = sum + number.price;
@@ -188,7 +198,7 @@ app.post('/razorpay', async (req, res) => {
 	// console.log('total amount', data);
 	const payment_capture = 1;
 	const amount = req.body.data;
-	const currency = 'INR';
+	const currency = "INR";
 
 	const options = {
 		amount: amount * 100,
@@ -209,7 +219,7 @@ app.post('/razorpay', async (req, res) => {
 		console.log(err);
 	}
 });
-app.post('/enrolling_user', async (req, res) => {
+app.post("/enrolling_user", async (req, res) => {
 	let { user_id, course_id } = req.body;
 	// let dt = await student
 	// 	.findOne({ _id: req.body?.user_id })
@@ -243,9 +253,9 @@ app.post('/enrolling_user', async (req, res) => {
 
 	res.send({ saveData: saved });
 });
-app.post('/getrelate', async (req, res) => {
+app.post("/getrelate", async (req, res) => {
 	let { course_id, user_id } = req.body;
-	console.log('cosss', course_id, user_id);
+	console.log("cosss", course_id, user_id);
 	async function getRelate() {
 		const result = await enrollment.aggregate([
 			// {
@@ -258,26 +268,26 @@ app.post('/getrelate', async (req, res) => {
 			// },
 			{
 				$lookup: {
-					from: 'javascripts',
-					localField: 'course_id',
-					foreignField: '_id',
-					as: 'courses',
+					from: "javascripts",
+					localField: "course_id",
+					foreignField: "_id",
+					as: "courses",
 				},
 			},
 			{
 				$lookup: {
-					from: 'questions',
-					localField: 'course_id',
-					foreignField: 'course',
-					as: 'questions',
+					from: "questions",
+					localField: "course_id",
+					foreignField: "course",
+					as: "questions",
 				},
 			},
 			{
 				$lookup: {
-					from: 'answers',
-					localField: 'course_id',
-					foreignField: 'course_id',
-					as: 'Answers',
+					from: "answers",
+					localField: "course_id",
+					foreignField: "course_id",
+					as: "Answers",
 				},
 			},
 		]);
@@ -291,27 +301,67 @@ app.post('/getrelate', async (req, res) => {
 			};
 			// return { quest: 'euet', ans: curr.Answers[0] };
 		});
-		console.log('integrating', dts);
-		console.log('hello', filteredResult);
+		console.log("integrating", dts);
+		console.log("hello", filteredResult);
 		res.send({ course: filteredResult, QNA: dts });
 	}
 	getRelate();
 });
 
-app.post('/questions', async (req, res) => {
+app.post("/questions", async (req, res) => {
 	// let {q_id}=req.body.q_id
 	// let quest = await question.find();
-	console.log('data', req.body.q_id);
+	console.log("data", req.body.q_id);
 	let dt = await question
 		.findOne()
-		.populate('answerd_by')
+		.populate("answerd_by")
 		.then((p) => p)
 		.catch((error) => console.log(error));
 	res.send({ data: dt });
 });
-app.get('/answers', async (req, res) => {
+app.get("/answers", async (req, res) => {
 	let ans = await answer.find();
-	console.log('hello answer', ans);
+	console.log("hello answer", ans);
 });
 
-app.listen(8000, () => console.log('server running at 8000'));
+// let server = app.listen(8000, () => console.log("server running at 8000"));
+// const io = socket(server, {
+// 	cors: {
+// 		origin: "*",
+// 	},
+// });
+// io.on("connected", (socket) => {
+// 	console.log("isConnected?", socket.id);
+// 	socket.on("join_room", (data) => {
+// 		socket.join(data);
+// 	});
+// 	socket.on("send_message", (data) => {
+// 		socket.to(data.room).emit("receive_message", data);
+// 	});
+// 	socket.on("disconnect", () => {
+// 		console.log("disconnected");
+// 	});
+// });
+const server = app.listen("8000", () => {
+	console.log("Server Running on Port 8000...");
+});
+
+io = socket(server);
+
+io.on("connection", (socket) => {
+	console.log("USER CONNECTED", socket.id);
+
+	socket.on("join_room", (data) => {
+		socket.join(data);
+		console.log("User Joined Room No: " + data);
+	});
+
+	socket.on("send_message", (data) => {
+		console.log("User Send Message", data);
+		socket.to(data.room).emit("receive_message", data.content);
+	});
+
+	socket.on("disconnect", () => {
+		console.log("USER DISCONNECTED");
+	});
+});

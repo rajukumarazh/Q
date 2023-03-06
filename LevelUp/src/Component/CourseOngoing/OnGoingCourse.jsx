@@ -4,18 +4,34 @@ import Question from './QuizzeTrivia/Question';
 import Submission from './QuizzeTrivia/Submission';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { current } from '@reduxjs/toolkit';
+import { handleQuizzData } from '../../Redux/Toolkit/QuizzSlice';
+import { useDispatch } from 'react-redux';
 function OnGoingCourse() {
+	let dispatch = useDispatch();
 	let allState = useSelector((state) => state);
 	console.log('allStateOngoing', allState);
 	const location = useLocation();
-	console.log('extractQuesChapter', location.state);
-	let questions = allState?.levelUp?.enrolled_courses?.QNA.filter(
-		(curr) => curr?.course_id == location.state.value
+	console.log('expppp', location.state);
+	const [current_chapter, setCurrentChapter] = useState({
+		chapter: '',
+		quest: '',
+	});
+	let currCourseQuizz = allState?.levelUp.enrolled_courses.QNA?.filter(
+		(curr) => curr.course_id == location?.state?.course
 	);
-	let qt = questions[0]?.qeust;
-	console.log('questionssdsd', questions[0]?.qeust);
-	const [current_chapter, setCurrentChapter] = useState();
+
+	useEffect(() => {
+		let currCourseQuizz = allState?.levelUp.enrolled_courses.QNA?.filter(
+			(curr) => curr.course_id == location?.state?.course
+		);
+		if (currCourseQuizz) {
+			dispatch(handleQuizzData(currCourseQuizz[0]?.qeust));
+		}
+	}, []);
+	console.log('helloOngoing', currCourseQuizz[0]);
+	console.log('hello', current_chapter);
 	return (
 		<div className="mt-10">
 			{/* <!-- page --> */}
@@ -169,7 +185,10 @@ function OnGoingCourse() {
 							{allState?.isSubmitted ? (
 								<Submission />
 							) : (
-								<Question triviaData={{ current_chapter, qt }} />
+								<Question
+									quest={currCourseQuizz[0]}
+									chapter={current_chapter}
+								/>
 							)}
 						</div>
 					</div>

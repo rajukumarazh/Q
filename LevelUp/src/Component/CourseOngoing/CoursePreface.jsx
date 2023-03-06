@@ -3,6 +3,7 @@ import { changeLearnginStatus } from '../../Redux/Toolkit/CourseSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
 	Accordion,
 	AccordionItem,
@@ -18,6 +19,9 @@ export default function CoursePreface() {
 	const allState = useSelector((state) => state);
 	console.log('state', allState);
 	let dispatch = useDispatch();
+	let locate = useLocation();
+	const AllState = useSelector((state) => state);
+	console.log('helo', AllState, locate);
 	return (
 		<Accordion className="p-4">
 			<AccordionItem>
@@ -36,7 +40,7 @@ export default function CoursePreface() {
 					</p>
 					<Link
 						to="/ongoing"
-						state={{ value: allState?.levelUp?.current_course?.course_id }}
+						state={{ course: locate.state.course }}
 						// onClick={() => dispatch(changeLearnginStatus())}
 						className="bg-red-400 px-2 py-1 text-white font font-semibold rounded-lg "
 					>
