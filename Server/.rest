@@ -39,3 +39,19 @@ content-type: application/json
 {
     "q_id":"63fc458024c74219c5568db4"
 }
+
+####
+POST http://localhost:8000/addongoig_course HTTP/1.1
+content-type: application/json
+
+{
+    "course_id":"63fc458024c74219c5568db4"
+}
+
+###
+POST http://localhost:8000/getongoing HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":"63e08a55e058394fe7971d56"
+}

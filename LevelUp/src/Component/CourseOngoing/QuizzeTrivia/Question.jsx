@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
-import q from "../../../q.json";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import q from '../../../q.json';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
 	// setApidata,
 	submitted,
 	HandleMarks,
 	chooseAnswer,
-} from "../../../Redux/Toolkit/QuizzSlice";
-import { Navigate } from "react-router-dom";
+	handleQuizzData,
+} from '../../../Redux/Toolkit/QuizzSlice';
+import { Navigate } from 'react-router-dom';
 function Question(props) {
 	const allState = useSelector((state) => state.levelUpQuizz);
 	const allState2 = useSelector((state) => state);
 	const [quest, setQuest] = useState();
 	/// pagination here
 	// console.log("hello2", allState2);
+	const dispatch = useDispatch(chooseAnswer);
 	useEffect(() => {
 		setQuest(() => allState?.current_course_quizz);
 	}, [allState]);
-	console.log("props", props);
+	console.log('props', props);
 	const [subject, setSubject] = useState();
 
 	const [sub, setSub] = useState(false);
@@ -33,13 +35,13 @@ function Question(props) {
 	let lastindex = currentPage * perPage;
 	let firstindex = lastindex - perPage;
 	let pages = quest?.slice(firstindex, lastindex);
-	console.log("pages", pages);
+	console.log('pages', pages);
 	let count = [];
 	for (let i = 1; i <= totalNumberOfPage; i++) {
 		count.push(i);
 	}
-	const dispatch = useDispatch(chooseAnswer);
-	console.log("Q", q);
+
+	console.log('Q', q);
 	const chooseAnswerFun = (ans, id) => {
 		let quiz = [];
 		allState?.current_course_quizz?.forEach((e) => {
@@ -49,31 +51,29 @@ function Question(props) {
 			}
 		});
 		dispatch(chooseAnswer([...quiz]));
-		console.log("id", id, ans, quiz);
+		console.log('id', id, ans, quiz);
 	};
 	if (sub == true) {
 		return <Navigate to="/submitted" />;
 	}
 	const handleNavigate = () => {
-		let totalMarks = allState.QNA?.current_course_quizz?.filter(
-			(curr) => {
-				return curr.correctAnswer == curr.choosen;
-			},
-		);
-		console.log("marks", totalMarks?.length);
+		let totalMarks = allState.QNA2?.filter((curr) => {
+			return curr.correct_answer == curr.choosen;
+		});
+		console.log('marks', totalMarks?.length);
 		setSub(!sub);
-		dispatch(HandleMarks(totalMarks?.length), submitted());
+		dispatch(HandleMarks(totalMarks?.length));
 		dispatch(submitted(true));
 	};
-	console.log("hello", allState);
+	console.log('hello', allState);
 	return (
 		<div className="p-5 relative">
 			{currentPage == allState?.QNA?.length ? (
 				<p className="text-red-600 text-center font-semibold underline">
-					Last Question{" "}
+					Last Question{' '}
 				</p>
 			) : (
-				""
+				''
 			)}
 			<div className="flex justify-between">
 				{pages !== undefined ? (
@@ -91,12 +91,7 @@ function Question(props) {
 											<input
 												id="default-radio-1"
 												type="radio"
-												onClick={() =>
-													chooseAnswerFun(
-														ans,
-														curr._id,
-													)
-												}
+												onClick={() => chooseAnswerFun(ans, curr._id)}
 												value={ans}
 												name="default-radio"
 												className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -133,11 +128,7 @@ function Question(props) {
 			<div className="flex justify-between">
 				<button
 					onClick={() =>
-						setCurrentPage(
-							currentPage !== 1
-								? currentPage - 1
-								: currentPage,
-						)
+						setCurrentPage(currentPage !== 1 ? currentPage - 1 : currentPage)
 					}
 					className="rounded-md px-2 py-1 text-black bg-green-500 shadow-md m-4"
 				>
@@ -147,9 +138,7 @@ function Question(props) {
 				<button
 					onClick={() =>
 						setCurrentPage(
-							currentPage !== quest.length
-								? currentPage + 1
-								: currentPage,
+							currentPage !== quest.length ? currentPage + 1 : currentPage
 						)
 					}
 					className="rounded-md px-2 py-1 text-black bg-green-500 shadow-md m-4"
@@ -165,16 +154,14 @@ function Question(props) {
 								<button
 									value={curr}
 									className="rounded-md px-2 py-1 text-black bg-green-500 shadow-md m-4"
-									onClick={(e) =>
-										setCurrentPage(e.target.value)
-									}
+									onClick={(e) => setCurrentPage(e.target.value)}
 								>
 									{curr}
 								</button>
 							</>
 						);
 				  })
-				: ""}
+				: ''}
 			{/* {allState?.QNA?.current_course_quizz[
 				allState?.QNA?.current_course_quizz?.length - 1
 			].choosen !== undefined &&

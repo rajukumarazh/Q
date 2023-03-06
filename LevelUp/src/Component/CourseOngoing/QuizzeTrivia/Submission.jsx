@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import {setApidata, submitted, HandleMarks, chooseAnswer } from "../"
+import axios from 'axios';
 import {
 	setApidata,
 	submitted,
@@ -15,13 +16,21 @@ function Submission() {
 	console.log('Submission', allState);
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
-	function pleaseNavigate() {
+	async function pleaseNavigate() {
 		dispatch(submitted());
 		navigate('/user');
+		let dt = await axios
+			.post('http://localhost:8000/addongoig_course ', {
+				course_id: '63e1fcb7e48532c7a836099d',
+				user_id: '63df3676b3bbe5ad38510287',
+			})
+			.then((res) => res);
+		console.log('dt', dt);
 	}
+
 	return (
 		<div>
-			<div className="bg-gray-100 h-screen">
+			<div className="bg-gray-100 h-screen mt-10">
 				<div className="bg-white p-6  md:mx-auto">
 					<svg
 						viewBox="0 0 24 24"
