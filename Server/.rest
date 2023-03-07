@@ -24,7 +24,6 @@ content-type: application/json
 {
     "user_id":"63df3676b3bbe5ad38510287",
     "course_id":"63e1fcb7e48532c7a836099d"
-
 }
 
 ####

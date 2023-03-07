@@ -255,7 +255,7 @@ app.post('/enrolling_user', async (req, res) => {
 });
 app.post('/getrelate', async (req, res) => {
 	let { course_id, user_id } = req.body;
-	console.log('cosss', course_id, user_id);
+	console.log('req_getRelate', course_id, user_id);
 	async function getRelate() {
 		const result = await enrollment.aggregate([
 			// {
